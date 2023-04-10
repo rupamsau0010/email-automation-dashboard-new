@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Data Page - Imformation based on the filters you selected</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="static/favicon-32x32.png">
+
+    <!-- Bootstrap v5.1.3 CDNs -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="css/dashboard.css">
+
+</head>
+
+<body>
+    <div class="data-outer">
+        <h1 class="text-center"><img src="static/cognizant-logo-with-name.jpg" height="80" width="300" alt=""></h1>
+        <% if(data.length > 0 && data[0].view === "self") { %>
+            <form class="data-form" action="/update-task-completion-status" method="post">
+                <div class="table-container">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Task Id</th>
+                                <th>Task Name</th>
+                                <th>Details</th>
+                                <th>Assigned Date</th>
+                                <th>Last Date</th>
+                                <th>Mark as Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% data.forEach(function(element){ %>
+                                <tr>
+                                    <td>
+                                        <%=element.task_id %>
+                                    </td>
+                                    <td>
+                                        <%=element.task_name %>
+                                    </td>
+                                    <td>
+                                        <%-element.task_details %>
+                                    </td>
+                                    <td>
+                                        <%=element.assigned_date %>
+                                    </td>
+                                    <td>
+                                        <%=element.last_date %>
+                                    </td>
+                                    <td>
+                                        <% if (element.completed === true) { %>
+                                            <label class="switch">
+                                                <input type="checkbox" name="<%= element.task_id %>" value="on" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        <% } else { %>
+                                            <label class="switch">
+                                                <input type="checkbox" name="<%= element.task_id %>" value="on">
+                                                <span class="slider"></span>
+                                            </label>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" class="btn btn-success data-button">Update Data</button>
+            </form>
+        <% } else if (data.length > 0 && data[0].view === "given") { %>
+            <form class="data-form" action="/update-task-completion-status" method="post">
+                <div class="table-container">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Employee Id</th>
+                                <th>Task Id</th>
+                                <th>Task Name</th>
+                                <th>Details</th>
+                                <th>Assigned Date</th>
+                                <th>Last Date</th>
+                                <th>Mark as Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% data.forEach(function(element){ %>
+                                <tr>
+                                    <td>
+                                        <%=element.employee_id %>
+                                    </td>
+                                    <td>
+                                        <%=element.task_id %>
+                                    </td>
+                                    <td>
+                                        <%=element.task_name %>
+                                    </td>
+                                    <td>
+                                        <%-element.task_details %>
+                                    </td>
+                                    <td>
+                                        <%=element.assigned_date %>
+                                    </td>
+                                    <td>
+                                        <%=element.last_date %>
+                                    </td>
+                                    <td>
+                                        <% if (element.completed === true) { %>
+                                            <label class="switch">
+                                                <input type="checkbox" name="<%= element.task_id %>" value="on" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        <% } else { %>
+                                            <label class="switch">
+                                                <input type="checkbox" name="<%= element.task_id %>" value="on">
+                                                <span class="slider"></span>
+                                            </label>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" class="btn btn-success data-button">Update Data</button>
+            </form>
+        <% } else { %>
+            <div class="no-data-h2">
+                <h2>You don't have any task based on the condition you entered or you are not authorized to update this task. Please go back and
+                    check the condition. Thank you.</h2>
+            </div>
+        <% } %>
+    </div>
+</body>
+
+</html>

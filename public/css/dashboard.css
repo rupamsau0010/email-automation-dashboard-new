@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../static/background-img.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .login {
+    width: 360px;
+    height: min-content;
+    padding: 20px;
+    border-radius: 12px;
+    background: #ffffff;
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .login h1 {
+    font-size: 36px;
+    margin-bottom: 25px;
+  }
+  
+  .login form {
+    font-size: 20px;
+  }
+  
+  .login form .form-group {
+    margin-bottom: 12px;
+  }
+  
+  .login form input[type="submit"] {
+    font-size: 20px;
+    margin-top: 15px;
+  }
+  
+  .task-comletion-status {
+    margin-top: 20px;
+  }
+  
+  .btn-main-page {
+    margin-top: 20px;
+  }
+  
+  .data-outer {
+    background-color: #ffffff;
+    border-radius: 12px;
+  }
+  
+  .data-form {
+    text-align: center;
+  }
+
+  .table-container {
+    width: 1300px;
+    height: 500px;
+    overflow-y: scroll;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table thead th,
+  .table tbody td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .table thead th {
+    background-color: #f2f2f2;
+  }  
+  
+  .data-button {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+
+  .no-data-h2 {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 1300px;
+    height: 500px;
+    padding-top: 170px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  /* ------------------------------------------------------------------------------------------------------------- */
+  /* The switch - the box around the slider */
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+/* Hide the default checkbox */
+.switch input {
+  display: none;
+}
+
+/* The slider - the moving part of the switch */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 20px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* Add a circle to the slider */
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* When the checkbox is checked, move the slider */
+.switch input:checked + .slider {
+  background-color: #2196F3;
+}
+
+.switch input:checked + .slider::before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+  
