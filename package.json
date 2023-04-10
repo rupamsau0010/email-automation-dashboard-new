@@ -1,4 +1,14 @@
 {
+  "name": "dashboard-main",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server"
+  },
+  "keywords": [],
+  "author": "Rupam Sau",
+  "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",

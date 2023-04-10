@@ -93,20 +93,20 @@ router.post('/send-otp', async (req, res) => {
 
         // save the email id to cookie to access it on the "/check-otp" route
         res.cookie('email_id', email_id);
-
         // send a success response
         res.redirect("/check-otp-page")
         // res.render("otp")
     } catch (err) {
         console.error(err);
-        res.send(`
-            <script>
-            alert(${err});
-            setTimeout(function() {
-                window.location.href = '/';
-            }, 1); // redirect after 1 milisecond
-            </script>
-        `);
+        // res.send(`
+        //     <script>
+        //     alert(${err});
+        //     setTimeout(function() {
+        //         window.location.href = '/';
+        //     }, 1); // redirect after 1 milisecond
+        //     </script>
+        // `);
+        res.send(err)
     }
 });
 
