@@ -148,7 +148,7 @@ router.post('/check-otp', async (req, res) => {
         if (validOtp) {
             // generate a unique token using jwt
             const payload = { email_id: 'user@example.com' };
-            const secret = process.env.APPSETTING_MY_JWT_SECRET
+            const secret = process.env.MY_JWT_SECRET
             const expiresIn = '24h'
 
             const token = jwt.sign(payload, secret, { expiresIn })

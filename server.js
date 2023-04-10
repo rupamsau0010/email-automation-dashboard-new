@@ -15,13 +15,13 @@ const {cookieJwtAuth} = require("./middlewares/authMiddleware")
 const app = express();
 
 // setting up the dynamic port as well as the local port.
-const port = process.env.APPSETTING_PORT;  
+const port = process.env.PORT;  
 
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(express.static("public"));
-app.use(cookieParser(process.env.APPSETTING_COOKIE_SECRET));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // app.use(session({
 //     secret: 'keyboard cat',

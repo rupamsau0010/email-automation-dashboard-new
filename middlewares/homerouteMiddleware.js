@@ -6,7 +6,7 @@ exports.homerouteMiddleware = (req, res, next) => {
         next()
     } else {
         try {
-            const email_id = jwt.verify(token, process.env.APPSETTING_MY_JWT_SECRET)
+            const email_id = jwt.verify(token, process.env.MY_JWT_SECRET)
             // req.email_id = email_id
             // console.log("email id ", email_id);
             return res.redirect("/filter")
