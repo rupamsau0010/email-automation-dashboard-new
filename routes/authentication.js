@@ -101,7 +101,7 @@ router.post('/send-otp', async (req, res) => {
         console.error(err);
         res.send(`
             <script>
-            alert('Internal server error. Please try again!');
+            alert(${err});
             setTimeout(function() {
                 window.location.href = '/';
             }, 1); // redirect after 1 milisecond
