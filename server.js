@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 // Getting the self defined modules
 const authRoutes = require("./routes/authentication")
 const tableDataRoutes = require("./routes/tabledata")
+const craeteTaskRoutes = require("./routes/createTask")
 const mssql_config = require("./configs/connectMSsql")
 const {cookieJwtAuth} = require("./middlewares/authMiddleware")
 
@@ -41,6 +42,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 // use the routes
 app.use("/", authRoutes)
 app.use("/", cookieJwtAuth, tableDataRoutes)
+app.use("/", craeteTaskRoutes)
 
 // Running the server
 app.listen(port, (err) => {

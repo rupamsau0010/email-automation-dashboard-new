@@ -103,6 +103,83 @@
     padding-right: 50px;
   }
 
+  .create-new-task-h2 h2 {
+    font-size: 24px;
+    color: #333;
+    margin-top: 30px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* create task page */
+  .create-task {
+    /* width: 860px; */
+    height: min-content;
+    padding: 20px;
+    border-radius: 12px;
+    background: #ffffff;
+  }
+
+  .create-task h1 {
+    font-size: 36px;
+    margin-bottom: 25px;
+  }
+  
+  .create-task form {
+    font-size: 20px;
+  }
+  
+  .create-task form .form-group {
+    margin-bottom: 12px;
+  }
+  
+  .create-task form input[type="submit"] {
+    font-size: 20px;
+    margin-top: 15px;
+  }
+
+  .create-task-input {
+    margin-bottom: 20px;
+  }
+
+  .create-new-task-size {
+    width: 1300px;
+    height: 500px;
+    overflow-y: scroll;
+  }
+
+  #add-custom-date {
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 20px;
+  }
+
+  .custom-date-label {
+    display: flex;
+    justify-content: left;
+  }
+
+  .custom-end-date-label {
+    margin-left: 37.5%;
+  }
+  
+  .custom-date-label label {
+    margin-right: 10px;
+  }
+  
+  .custom-date {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .custom-date input {
+    margin-right: 10px;
+  }  
+
+  .email-needed-div {
+    display: none;
+  }
+
   /* ------------------------------------------------------------------------------------------------------------- */
   /* The switch - the box around the slider */
 /* The switch - the box around the slider */
