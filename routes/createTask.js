@@ -11,4 +11,8 @@ router.get("/create-new-task", (req, res) => {
     res.render("create-task")
 })
 
+router.get("/testejs", (req, res) => {
+    res.render("test")
+})
+
 module.exports = router

@@ -148,6 +148,7 @@
     overflow-y: scroll;
   }
 
+  /* ------------------------------------------ */
   #add-custom-date {
     display: block;
     margin-top: 8px;
@@ -174,11 +175,164 @@
   
   .custom-date input {
     margin-right: 10px;
-  }  
+  } 
 
-  .email-needed-div {
+  /* ------------------------------------- */
+
+  .meeting-needed-div {
     display: none;
   }
+
+  /* ------------------------------------- */
+
+  .mail-day-before-same-after-time {
+    display: none;
+  }
+
+  /* ------------------------------------- */
+
+  .custom-meeting-date-and-time {
+    display: none;
+  }
+
+  #add-custom-meeting-date-and-time {
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 20px;
+  }
+
+  .custom-meeting-date-and-time-label {
+    display: flex;
+    justify-content: left;
+  }
+
+  .custom-end-meeting-date-and-time-label {
+    margin-left: 40.5%;
+  }
+  
+  .custom-meeting-date-and-time-label label {
+    margin-right: 10px;
+  }
+  
+  .custom-meeting-date-and-time-input {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .custom-meeting-date-and-time-input input {
+    margin-right: 10px;
+  }  
+
+  /* daily start-date and end-date */
+
+  .daily-start-end-label {
+    display: flex;
+    justify-content: left;
+  }
+
+  .daily-end-label {
+    margin-left: 42.3%;
+  }
+
+  .daily-start-end-label label {
+    margin-right: 10px;
+  }
+
+  .daily-start-end-input {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .daily-start-end-input input {
+    margin-right: 10px;
+  }
+
+  /* ---------------------------- */
+  /* weekly start date and end date */
+  
+  .weekly-start-end-label {
+    display: flex;
+    justify-content: left;
+  }
+
+  .weekly-end-label {
+    margin-left: 42.3%;
+  }
+
+  .weekly-start-end-label label {
+    margin-right: 10px;
+  }
+
+  .weekly-start-end-input {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .weekly-start-end-input input {
+    margin-right: 10px;
+  }
+
+  /* ---------------------------- */
+  /* monthly start date and end date */
+
+  .monthly-start-end-label {
+    display: flex;
+    justify-content: left;
+  }
+
+  .monthly-end-label {
+    margin-left: 42.3%;
+  }
+
+  .monthly-start-end-label label {
+    margin-right: 10px;
+  }
+
+  .monthly-start-end-input {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .monthly-start-end-input input {
+    margin-right: 10px;
+  }
+
+  /* -------------------------------- */
+
+  /* Set the display property of the parent element to flex */
+  .select-days-weekly {
+    display: flex;
+  }
+
+  /* Set the width of each child element to 50% */
+  .single-day, .multiple-day {
+    width: 50%;
+  }
+
+  /* Set the padding and box-sizing of each child element */
+  .single-day, .multiple-day {
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------- */
+
+  .select-days-monthly {
+    display: flex;
+  }
+
+  /* Set the width of each child element to 50% */
+  .first-column-monthly, .second-column-monthly, .third-column-monthly, .fourth-column-monthly {
+    width: 25%;
+  }
+
+  /* Set the padding and box-sizing of each child element */
+  .first-column-monthly, .second-column-monthly, .third-column-monthly, .fourth-column-monthly {
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------- */
 
   /* ------------------------------------------------------------------------------------------------------------- */
   /* The switch - the box around the slider */

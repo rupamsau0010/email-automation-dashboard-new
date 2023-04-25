@@ -26,8 +26,10 @@
             <div class="form-group create-new-task-size">
                 <label class="form-label" for="receivers">Receiver's Email ID/IDs</label>
                 <input class="form-control create-task-input" type="text" id="receivers" name="receivers_email_id"
-                    placeholder="Enter all the email ids in a comma seperated way (like - rupam@cognizant.com,sarfaraz@cognizant.com)."
-                    required>
+                    placeholder="Enter all the email ids in a comma separated way (like - rupam@cognizant.com,sarfaraz@cognizant.com)."
+                    oninput="validateCommaSeperatedReceiversEmailList()" required
+                    pattern="^([a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)(,[a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)*$">
+                <div id="receivers-input-error" class="invalid-feedback"></div>
 
                 <label class="form-label" for="task-name">Task name</label>
                 <input class="form-control create-task-input" type="text" id="task-name" name="task-name"
@@ -40,7 +42,7 @@
 
                 <label class="form-label">Severity of the task</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="severity" id="high" value="high">
+                    <input class="form-check-input" type="radio" name="severity" id="high" value="high" required>
                     <label class="form-check-label" for="high">
                         High
                     </label>
@@ -60,7 +62,10 @@
 
                 <label class="form-label" for="cc">CCs</label>
                 <input class="form-control create-task-input" type="text" id="cc" name="cc"
-                    placeholder="Enter all the CCs in comma seperated way (like - xyz@cognizant.com, abc@cognizant.com). skip if no CC is there.">
+                    placeholder="Enter all the CCs in comma seperated way (like - xyz@cognizant.com, abc@cognizant.com). skip if no CC is there."
+                    oninput="validateCcEmailList()"
+                    pattern="^([a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)(,[a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)*$">
+                <div id="cc-input-error" class="invalid-feedback"></div>
 
                 <div class="cc-skip-group">
                     <label for="cc-times" class="form-label">How many times CC will be skipped (If any).</label>
@@ -70,7 +75,10 @@
 
                 <label class="form-label" for="bcc">BCCs</label>
                 <input class="form-control create-task-input" type="text" id="bcc" name="bcc"
-                    placeholder="Enter all the BCCs in comma seperated way (like - xyz@cognizant.com, abc@cognizant.com). skip if no BCC is there.">
+                    placeholder="Enter all the BCCs in comma seperated way (like - xyz@cognizant.com, abc@cognizant.com). skip if no BCC is there."
+                    oninput="validateBccEmailList()"
+                    pattern="^([a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)(,[a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)*$">
+                <div id="bcc-input-error" class="invalid-feedback"></div>
 
                 <div class="bcc-skip-group">
                     <label for="bcc-times" class="form-label">How many times BCC will be skipped (If any).</label>
@@ -80,7 +88,7 @@
 
                 <label class="form-label">Task recurrence pattern</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recurrence" id="custom" value="custom">
+                    <input class="form-check-input" type="radio" name="recurrence" id="custom" value="custom" required>
                     <label class="form-check-label" for="custom">
                         Custom date
                     </label>
@@ -112,28 +120,239 @@
                         <label class="form-label custom-end-date-label" for="custom-end-date">Task Completed By:</label>
                     </div>
                     <div class="custom-date">
-                        <input class="form-control" type="date" id="custom-start-date" name="custom-date" required>
-                        <input class="form-control" type="date" id="custom-end-date" name="custom-end-date" required>
+                        <input class="form-control" type="date" id="custom-start-date" name="custom-date">
+                        <input class="form-control" type="date" id="custom-end-date" name="custom-end-date"
+                            oninput="validateCustomDate()">
                     </div>
+                    <div id="custom-date-input-error" class="invalid-feedback"></div>
                     <button id="add-custom-date" class="btn btn-success">Add Date</button>
 
-                    <input class="form-check-input create-task-input" type="checkbox" id="email-needed"
-                        name="email-needed" required>
-                    <label class="form-label"> Do you want to call a meeting on some specific date</label>
+                </div>
 
-                    <div class="email-needed-div">
-                        <h1>Email Needed</h1>
+                <div class="recurrence-patteren">
+
+                    <div class="daily-start-end-label">
+                        <label class="form-label" for="daily-start-date">Start date: </label>
+                        <label class="form-label daily-end-label" for="daily-end-date">End date: </label>
+                    </div>
+                    <div class="daily-start-end-input">
+                        <input class="form-control create-task-input" type="date" id="daily-start-date"
+                            name="daily-start-date">
+                        <input class="form-control create-task-input" type="date" id="daily-end-date"
+                            name="daily-end-date">
+                    </div>
+
+                </div>
+
+                <div class="recurrence-patteren">
+
+                    <div class="weekly-start-end-label">
+                        <label class="form-label" for="weekly-start-date">Start date: </label>
+                        <label class="form-label weekly-end-label" for="weekly-end-date">End date: </label>
+                    </div>
+                    <div class="weekly-start-end-input">
+                        <input class="form-control create-task-input" type="date" id="weekly-start-date"
+                            name="weekly-start-date">
+                        <input class="form-control create-task-input" type="date" id="weekly-end-date"
+                            name="weekly-end-date">
+                    </div>
+
+                    Select days option
+                    <div class="select-days-weekly">
+                        <div class="single-day">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="recurrence" id="sunday"
+                                    value="sunday">
+                                <label class="form-check-label" for="sunday">
+                                    Sunday
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="recurrence" id="monday"
+                                    value="monday">
+                                <label class="form-check-label" for="monday">
+                                    Monday
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="recurrence" id="tuesday"
+                                    value="tuesday">
+                                <label class="form-check-label" for="tuesday">
+                                    Tuesday
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="recurrence" id="wednesday"
+                                    value="wednesday">
+                                <label class="form-check-label" for="wednesday">
+                                    Wednesday
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="recurrence" id="thursday"
+                                    value="thursday">
+                                <label class="form-check-label" for="thursday">
+                                    Thursday
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="recurrence" id="friday"
+                                    value="friday">
+                                <label class="form-check-label" for="friday">
+                                    Friday
+                                </label>
+                            </div>
+                            <div class="form-check create-task-input">
+                                <input class="form-check-input" type="checkbox" name="recurrence" id="saturday"
+                                    value="saturday">
+                                <label class="form-check-label" for="saturday">
+                                    Saturday
+                                </label>
+                            </div>
+                        </div>
+                        <div class="multiple-day">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="recurrence" id="every-weekdays"
+                                    value="every-weekdays">
+                                <label class="form-check-label" for="every-weekdays">
+                                    Every Weekdays
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="recurrence" id="every-weekends"
+                                    value="every-weekends">
+                                <label class="form-check-label" for="every-weekends">
+                                    Every Weekends
+                                </label>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
                 <div class="recurrence-patteren">
-                    <h1>Hi</h1>
+
+                    <div class="monthly-start-end-label">
+                        <label class="form-label" for="monthly-start-date">Start date: </label>
+                        <label class="form-label monthly-end-label" for="monthly-end-date">End date: </label>
+                    </div>
+                    <div class="monthly-start-end-input">
+                        <input class="form-control create-task-input" type="date" id="monthly-start-date"
+                            name="monthly-start-date">
+                        <input class="form-control create-task-input" type="date" id="monthly-end-date"
+                            name="monthly-end-date">
+                    </div>
+
+                    Select days option
+                    <div class="select-days-monthly">
+                        <!-- function for determining the suffix of the date in the month -->
+                        <% function getNumberWithSuffix(number) { if (number % 100>= 11 && number % 100 <= 13) { return
+                                number + "th" ; } else { switch (number % 10) { case 1: return number + "st" ; case 2:
+                                return number + "nd" ; case 3: return number + "rd" ; default: return number + "th" ; }
+                                } } %>
+                                <div class="first-column-monthly">
+                                    <% for (let i=1; i <=8; i++) { %>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="recurrence"
+                                                id="m-<%= i %>" value="m-<%= i %>">
+                                            <label class="form-check-label" for="m-<%= i %>">
+                                                <%= getNumberWithSuffix(i) %>
+                                            </label>
+                                        </div>
+                                        <% } %>
+                                </div>
+                                <div class="second-column-monthly">
+                                    <% for (let i=9; i <=16; i++) { %>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="recurrence"
+                                                id="m-<%= i %>" value="m-<%= i %>">
+                                            <label class="form-check-label" for="m-<%= i %>">
+                                                <%= getNumberWithSuffix(i) %>
+                                            </label>
+                                        </div>
+                                        <% } %>
+                                </div>
+                                <div class="third-column-monthly">
+                                    <% for (let i=17; i <=24; i++) { %>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="recurrence"
+                                                id="m-<%= i %>" value="m-<%= i %>">
+                                            <label class="form-check-label" for="m-<%= i %>">
+                                                <%= getNumberWithSuffix(i) %>
+                                            </label>
+                                        </div>
+                                        <% } %>
+                                </div>
+                                <div class="fourth-column-monthly">
+                                    <% for (let i=25; i <=31; i++) { %>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="recurrence"
+                                                id="m-<%= i %>" value="m-<%= i %>">
+                                            <label class="form-check-label" for="m-<%= i %>">
+                                                <%= getNumberWithSuffix(i) %>
+                                            </label>
+                                        </div>
+                                        <% } %>
+                                </div>
+                    </div>
                 </div>
-                <div class="recurrence-patteren">
-                    <h1>Java</h1>
+
+                <input class="form-check-input create-task-input" type="checkbox" id="meeting-needed"
+                    name="meeting-needed">
+                <label class="form-label"> Do you want to call a meeting with the defaulters on some specific
+                    date</label>
+
+                <div class="meeting-needed-div">
+                    <label class="form-label">Meeting preferance</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="meeting-preferance-day-type"
+                            id="day-before" value="day-before">
+                        <label class="form-check-label" for="day-before">
+                            One day before the last date of completion
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="meeting-preferance-day-type" id="day-same"
+                            value="day-same">
+                        <label class="form-check-label" for="day-same">
+                            On the day of the last date of completion
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="meeting-preferance-day-type"
+                            id="day-after" value="day-after">
+                        <label class="form-check-label" for="day-after">
+                            One day after the last date of completion
+                        </label>
+                    </div>
+                    <div class="form-check create-task-input">
+                        <input class="form-check-input" type="checkbox" name="meeting-preferance-day-type"
+                            id="day-custom" value="day-custom">
+                        <label class="form-check-label" for="day-custom">
+                            Custom date
+                        </label>
+                    </div>
                 </div>
-                <div class="recurrence-patteren">
-                    <h1>Python</h1>
+
+                <div class="mail-day-before-same-after-time">
+                    <label class="form-label" for="before-same-after-time">Meeting Time (reminder - 15 min
+                        before)</label>
+                    <input class="form-control create-task-input" type="time" id="before-same-after-time"
+                        name="before-same-after-time">
+                </div>
+
+                <div class="custom-meeting-date-and-time">
+                    <div class="create-task-input" id="custom-meeting-date-and-time-list"></div>
+                    <div class="custom-meeting-date-and-time-label">
+                        <label class="form-label" for="custom-meeting-date">Custom date</label>
+                        <label class="form-label custom-end-meeting-date-and-time-label"
+                            for="custom-meeting-time">Meeting time
+                            (reminder - 15 min before)</label>
+                    </div>
+                    <div class="custom-meeting-date-and-time-input">
+                        <input class="form-control" type="date" id="custom-meeting-date" name="custom-meeting-date">
+                        <input class="form-control" type="time" id="custom-meeting-time" name="custom-meeting-time">
+                    </div>
+                    <button id="add-custom-meeting-date-and-time" class="btn btn-success">Add Date</button>
                 </div>
 
             </div>
@@ -261,6 +480,9 @@
 
             datesList.innerHTML = output;
 
+            // call the submit button enabled function
+            checkFormValidity()
+
             // scroll to the bottom of the page
             // Scroll to the button
             // scroll to the new date element
@@ -273,21 +495,251 @@
 
         // ------------------------------------------------------------------------------------------
 
-        const emailNeededCheckbox = document.getElementById("email-needed");
-        const emailNeededDiv = document.querySelector(".email-needed-div");
+        const meetingNeededCheckbox = document.getElementById("meeting-needed");
+        const meetingNeededDiv = document.querySelector(".meeting-needed-div");
 
-        emailNeededCheckbox.addEventListener("change", function () {
+        meetingNeededCheckbox.addEventListener("change", function () {
             if (this.checked) {
-                emailNeededDiv.style.display = "block";
+                meetingNeededDiv.style.display = "block";
                 // scrolls to bottom of the page
-                emailNeededCheckbox.scrollIntoView({ behavior: 'smooth' });
+                meetingNeededCheckbox.scrollIntoView({ behavior: 'smooth' });
             } else {
-                emailNeededDiv.style.display = "none";
+                meetingNeededDiv.style.display = "none";
             }
         });
 
+        // -----------------------------------------------------------------------------------------
+
+        //mail-day-before-same-after
+        // Get a reference to the "day-custom" checkbox element
+        const mailDayBeforeCheckbox = document.getElementById("day-before");
+        const mailDaySameCheckbox = document.getElementById("day-same")
+        const mailDayAfterCheckbox = document.getElementById("day-after")
+
+        // Get a reference to the "mail-day-before-same-after" div element
+        const mailDayBeforeSameAfterDiv = document.querySelector(".mail-day-before-same-after-time");
+
+        // Add an event listener to the checkboxes to track their state changes
+        [mailDayBeforeCheckbox, mailDaySameCheckbox, mailDayAfterCheckbox].forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+                if (mailDayBeforeCheckbox.checked || mailDaySameCheckbox.checked || mailDayAfterCheckbox.checked) {
+                    mailDayBeforeSameAfterDiv.style.display = "block"; // Show the "mail-day-before-same-after" div
+
+                    // scrolls to bottom of the page
+                    checkbox.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    mailDayBeforeSameAfterDiv.style.display = "none"; // Hide the "mail-day-before-same-after" div
+                }
+            });
+        });
 
 
+        // ------------------------------------------------------------------------------------------
+
+        // Get a reference to the "day-custom" checkbox element
+        const customCheckbox = document.getElementById("day-custom");
+
+        // Get a reference to the "custom-meeting-date" div element
+        const customDateDiv = document.querySelector(".custom-meeting-date-and-time");
+
+        // Add an event listener to the "day-custom" checkbox to track its state changes
+        customCheckbox.addEventListener("change", function () {
+            if (this.checked) {
+                customDateDiv.style.display = "block"; // Show the "custom-meeting-date" div
+
+                // scrolls to bottom of the page
+                customCheckbox.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                customDateDiv.style.display = "none"; // Hide the "custom-meeting-date" div
+            }
+        });
+
+        // ---------------------------------------------------------------------------------------------------
+
+        const customMeetingDateInput = document.getElementById("custom-meeting-date");
+        const customMeetingTimeInput = document.getElementById("custom-meeting-time");
+        const addCustomMeetingButton = document.getElementById("add-custom-meeting-date-and-time");
+        const customMeetingDatesList = document.getElementById("custom-meeting-date-and-time-list");
+        const customMeetingDates = [];
+
+        addCustomMeetingButton.addEventListener("click", function (event) {
+            event.preventDefault(); // prevent form submission
+
+            const meetingDate = customMeetingDateInput.value;
+            const meetingTime = customMeetingTimeInput.value;
+
+            if (!meetingDate || !meetingTime) {
+                alert("Please enter the meeting date and time properly");
+                return;
+            }
+
+            customMeetingDates.push([meetingDate, meetingTime]);
+            let output = '';
+            for (let i = 0; i < customMeetingDates.length; i++) {
+                // console.log(typeof(dates[i][0]));
+                output += `${i + 1}. Meeting date: ${customMeetingDates[i][0]} || Meeting Time: ${customMeetingDates[i][1]} <br/>`;
+                // output += dates[i][0] + ' - ' + dates[i][1] + '\n'
+            }
+
+            customMeetingDatesList.innerHTML = output;
+
+            // scroll to the bottom of the page
+            // Scroll to the button
+            // scroll to the new date element
+            const newDateElement = customMeetingDatesList.lastElementChild;
+            newDateElement.scrollIntoView({ behavior: "smooth" });
+
+            customMeetingDateInput.value = "";
+            customMeetingTimeInput.value = "";
+        });
+
+        // --------------------------------------------------------------------------------------------------
+
+        // if anything from the left side checkbox is selected, then nothing will be selected from the right side.
+        // Get references to all checkboxes
+        const singleDayCheckboxes = document.querySelectorAll(".single-day input[type=checkbox]");
+        const multipleDayCheckboxes = document.querySelectorAll(".multiple-day input[type=checkbox]");
+
+        // Add event listeners to single-day checkboxes
+        singleDayCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+                // If this checkbox is checked, uncheck all checkboxes in multiple-day div
+                if (this.checked) {
+                    multipleDayCheckboxes.forEach(function (checkbox) {
+                        checkbox.checked = false;
+                    });
+                }
+            });
+        });
+
+        // Add event listeners to multiple-day checkboxes
+        multipleDayCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+                // If this checkbox is checked, uncheck all checkboxes in single-day div
+                if (this.checked) {
+                    singleDayCheckboxes.forEach(function (checkbox) {
+                        checkbox.checked = false;
+                    });
+                }
+            });
+        });
+
+        // ---------------------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------------------
+        // disable the submit button if all the inputs are not valid
+        // Get the form and submit button
+        const form = document.querySelector('form');
+        const submitButton = form.querySelector('input[type="submit"]');
+        const customDateRadio = document.getElementById('custom');
+
+        // Disable the submit button by default
+        submitButton.disabled = true;
+
+        function checkFormValidity() {
+            // Check if all inputs are valid
+            const inputs = form.querySelectorAll('input[required], textarea[required]');
+            const valid = [...inputs].every(input => input.checkValidity());
+
+            // Check if the custom date radio button is selected and there are no dates
+            const noDates = dates.length === 0;
+
+            // logs
+            // console.log("valid " + valid);
+            // console.log("customDateRadio.checked " + customDateRadio.checked);
+            // console.log("noDates " + noDates);
+
+            if (customDateRadio.checked && noDates) {
+                submitButton.disabled = true;
+            } else {
+                // Enable/disable the submit button based on validity
+                submitButton.disabled = !valid;
+            }
+        }
+
+        form.addEventListener('input', checkFormValidity);
+
+
+        // ---------------------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------------------
+        // Inputs validation checks in the front-end
+        // receiver's emails, comma seperated value
+        function validateCommaSeperatedReceiversEmailList() {
+            // receivers
+            // receivers-input-error
+            const textInput = document.getElementById("receivers");
+            const textPattern = /^([a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)(,[a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)*$/;
+            result = textPattern.test(textInput.value.trim())
+
+            if (!result) {
+                textInput.classList.add("is-invalid");
+                const receiversInputError = document.getElementById("receivers-input-error");
+                receiversInputError.textContent = "Please enter all email ids in a comma separated way without space in between";
+                receiversInputError.style.display = "block";
+            } else {
+                textInput.classList.remove("is-invalid");
+                document.getElementById("receivers-input-error").style.display = "none";
+            }
+        }
+
+        // check CC emails are strictly comma seperated or not
+        function validateCcEmailList() {
+            // receivers
+            // receivers-input-error
+            const textInput = document.getElementById("cc");
+            const textPattern = /^([a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)(,[a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)*$/;
+            result = textPattern.test(textInput.value.trim())
+
+            if (!result) {
+                textInput.classList.add("is-invalid");
+                const receiversInputError = document.getElementById("cc-input-error");
+                receiversInputError.textContent = "Please enter all email ids in a comma separated way without space in between";
+                receiversInputError.style.display = "block";
+            } else {
+                textInput.classList.remove("is-invalid");
+                document.getElementById("cc-input-error").style.display = "none";
+            }
+        }
+
+        // check BCC emails are strictly comma seperated or not
+        function validateBccEmailList() {
+            // receivers
+            // receivers-input-error
+            const textInput = document.getElementById("bcc");
+            const textPattern = /^([a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)(,[a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)*$/;
+            result = textPattern.test(textInput.value.trim())
+
+            if (!result) {
+                textInput.classList.add("is-invalid");
+                const receiversInputError = document.getElementById("bcc-input-error");
+                receiversInputError.textContent = "Please enter all email ids in a comma separated way without space in between";
+                receiversInputError.style.display = "block";
+            } else {
+                textInput.classList.remove("is-invalid");
+                document.getElementById("bcc-input-error").style.display = "none";
+            }
+        }
+
+        // check 'trigger date' is less than the 'completed by' or not
+        // in the custom section
+        function validateCustomDate() {
+            const startDateInput = document.getElementById("custom-start-date");
+            const endDateInput = document.getElementById("custom-end-date");
+            const addButton = document.getElementById("add-custom-date");
+
+            if (startDateInput.value > endDateInput.value) {
+                startDateInput.classList.add("is-invalid");
+                endDateInput.classList.add("is-invalid");
+                const customDateInputError = document.getElementById("custom-date-input-error");
+                customDateInputError.textContent = "Last date of completion must be atleast on day after the trigger date";
+                customDateInputError.style.display = "block";
+                addButton.disabled = true;
+            } else {
+                startDateInput.classList.remove("is-invalid");
+                endDateInput.classList.remove("is-invalid");
+                document.getElementById("custom-date-input-error").style.display = "none";
+                addButton.disabled = false;
+            }
+        }
 
     </script>
 </body>

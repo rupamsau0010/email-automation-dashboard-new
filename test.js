@@ -85,7 +85,7 @@
 //             result = await data_request.query(data_query);
 //         }
 //     }
-    
+
 //     console.log(result.recordset);
 //     console.log(result);
 //     // create a new arr of json including the only necessary data with proper format
@@ -113,7 +113,50 @@
 //     res.render("data", {data: data})
 // })
 
-const session = require('express-session');
+// const session = require('express-session');
 
-const store = new session.MemoryStore();
-console.log('Max session size:', store.maxSize);
+// const store = new session.MemoryStore();
+// console.log('Max session size:', store.maxSize);
+
+
+// function getNumberWithSuffix(number) {
+//     if (number % 100 >= 11 && number % 100 <= 13) {
+//         return number + "th";
+//     } else {
+//         switch (number % 10) {
+//             case 1:
+//                 return number + "st";
+//             case 2:
+//                 return number + "nd";
+//             case 3:
+//                 return number + "rd";
+//             default:
+//                 return number + "th";
+//         }
+//     }
+// }
+
+// function getNumberWithSuffix(number) {
+//     if (number % 100 >= 11 && number % 100 <= 13) {
+//         return number + "th";
+//     } else {
+//         switch (number % 10) {
+//             case 1: return number + "st"; case 2:
+//                 return number + "nd"; case 3: return number + "rd"; default: return number + "th";
+//         }
+//     }
+// }
+
+// console.log(getNumberWithSuffix(11));
+// console.log(getNumberWithSuffix(12));
+// console.log(getNumberWithSuffix(13));
+// console.log(getNumberWithSuffix(14));
+
+
+function isCommaSeparatedString(str) {
+    const emailPattern = /^([a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)(,[a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)*$/;
+    return emailPattern.test(str);
+}
+
+
+console.log(isCommaSeparatedString("gsgg@gofirst.onmicrosoft.com,"));
