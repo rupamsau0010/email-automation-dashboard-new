@@ -11,8 +11,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Bootstrap icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
     <!-- CSS File -->
     <link rel="stylesheet" href="css/dashboard.css">
+
+    <!-- Import the Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 </head>
 
@@ -22,10 +28,10 @@
 
         <h1 class="text-center"><img src="static/cognizant-logo-with-name.jpg" height="80" width="300" alt=""></h1>
 
-        <form class="needs-validation" action="/send-otp" method="post">
+        <form class="needs-validation" id="main-form" action="/create-new-task-data" method="post">
             <div class="form-group create-new-task-size">
                 <label class="form-label" for="receivers">Receiver's Email ID/IDs</label>
-                <input class="form-control create-task-input" type="text" id="receivers" name="receivers_email_id"
+                <input class="form-control create-task-input" type="text" id="receivers" name="receivers-email-id"
                     placeholder="Enter all the email ids in a comma separated way (like - rupam@cognizant.com,sarfaraz@cognizant.com)."
                     oninput="validateCommaSeperatedReceiversEmailList()" required
                     pattern="^([a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)(,[a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)*$">
@@ -69,8 +75,8 @@
 
                 <div class="cc-skip-group">
                     <label for="cc-times" class="form-label">How many times CC will be skipped (If any).</label>
-                    <input class="form-control create-task-input" type="number" id="cc-times" name="cc-times" min="1"
-                        max="5" value="0" onchange="this.value = Math.max(1, Math.min(5, this.value));">
+                    <input class="form-control create-task-input" type="number" id="cc-times" name="cc-times" value="0"
+                        defaultValue="0">
                 </div>
 
                 <label class="form-label" for="bcc">BCCs</label>
@@ -82,8 +88,8 @@
 
                 <div class="bcc-skip-group">
                     <label for="bcc-times" class="form-label">How many times BCC will be skipped (If any).</label>
-                    <input class="form-control create-task-input" type="number" id="bcc-times" name="bcc-times" min="1"
-                        max="5" value="0" onchange="this.value = Math.max(1, Math.min(5, this.value));">
+                    <input class="form-control create-task-input" type="number" id="bcc-times" name="bcc-times"
+                        value="0" defaultValue="0">
                 </div>
 
                 <label class="form-label">Task recurrence pattern</label>
@@ -120,12 +126,15 @@
                         <label class="form-label custom-end-date-label" for="custom-end-date">Task Completed By:</label>
                     </div>
                     <div class="custom-date">
-                        <input class="form-control" type="date" id="custom-start-date" name="custom-date">
+                        <input class="form-control" type="date" id="custom-start-date" name="custom-date"
+                            oninput="validateCustomDate()">
                         <input class="form-control" type="date" id="custom-end-date" name="custom-end-date"
                             oninput="validateCustomDate()">
                     </div>
                     <div id="custom-date-input-error" class="invalid-feedback"></div>
                     <button id="add-custom-date" class="btn btn-success">Add Date</button>
+                    <!-- Hidden input tag for receiving all the dates -->
+                    <input type="hidden" name="custom-hidden-start-end-date" id="custom-hidden-start-end-date">
 
                 </div>
 
@@ -137,10 +146,16 @@
                     </div>
                     <div class="daily-start-end-input">
                         <input class="form-control create-task-input" type="date" id="daily-start-date"
-                            name="daily-start-date">
+                            name="daily-start-date" oninput="validateDailyDate()">
                         <input class="form-control create-task-input" type="date" id="daily-end-date"
-                            name="daily-end-date">
+                            name="daily-end-date" oninput="validateDailyDate()">
                     </div>
+                    <div id="daily-date-input-error" class="invalid-feedback"></div>
+
+                    <label for="daily-completion-day-after" class="form-label">Completion Date (After how many days of
+                        assigning the task)</label>
+                    <input class="form-control create-task-input" type="number" id="daily-completion-day-after"
+                        name="daily-completion-day-after" value="1" defaultValue="1">
 
                 </div>
 
@@ -152,58 +167,59 @@
                     </div>
                     <div class="weekly-start-end-input">
                         <input class="form-control create-task-input" type="date" id="weekly-start-date"
-                            name="weekly-start-date">
+                            name="weekly-start-date" oninput="validateWeeklyDate()">
                         <input class="form-control create-task-input" type="date" id="weekly-end-date"
-                            name="weekly-end-date">
+                            name="weekly-end-date" oninput="validateWeeklyDate()">
                     </div>
+                    <div id="weekly-date-input-error" class="invalid-feedback"></div>
 
                     Select days option
                     <div class="select-days-weekly">
                         <div class="single-day">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="recurrence" id="sunday"
+                                <input class="form-check-input" type="checkbox" name="weekly-recurrence" id="sunday"
                                     value="sunday">
                                 <label class="form-check-label" for="sunday">
                                     Sunday
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="recurrence" id="monday"
+                                <input class="form-check-input" type="checkbox" name="weekly-recurrence" id="monday"
                                     value="monday">
                                 <label class="form-check-label" for="monday">
                                     Monday
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="recurrence" id="tuesday"
+                                <input class="form-check-input" type="checkbox" name="weekly-recurrence" id="tuesday"
                                     value="tuesday">
                                 <label class="form-check-label" for="tuesday">
                                     Tuesday
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="recurrence" id="wednesday"
+                                <input class="form-check-input" type="checkbox" name="weekly-recurrence" id="wednesday"
                                     value="wednesday">
                                 <label class="form-check-label" for="wednesday">
                                     Wednesday
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="recurrence" id="thursday"
+                                <input class="form-check-input" type="checkbox" name="weekly-recurrence" id="thursday"
                                     value="thursday">
                                 <label class="form-check-label" for="thursday">
                                     Thursday
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="recurrence" id="friday"
+                                <input class="form-check-input" type="checkbox" name="weekly-recurrence" id="friday"
                                     value="friday">
                                 <label class="form-check-label" for="friday">
                                     Friday
                                 </label>
                             </div>
                             <div class="form-check create-task-input">
-                                <input class="form-check-input" type="checkbox" name="recurrence" id="saturday"
+                                <input class="form-check-input" type="checkbox" name="weekly-recurrence" id="saturday"
                                     value="saturday">
                                 <label class="form-check-label" for="saturday">
                                     Saturday
@@ -212,21 +228,26 @@
                         </div>
                         <div class="multiple-day">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="recurrence" id="every-weekdays"
-                                    value="every-weekdays">
+                                <input class="form-check-input" type="checkbox" name="weekly-recurrence"
+                                    id="every-weekdays" value="every-weekdays">
                                 <label class="form-check-label" for="every-weekdays">
                                     Every Weekdays
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="recurrence" id="every-weekends"
-                                    value="every-weekends">
+                                <input class="form-check-input" type="checkbox" name="weekly-recurrence"
+                                    id="every-weekends" value="every-weekends">
                                 <label class="form-check-label" for="every-weekends">
                                     Every Weekends
                                 </label>
                             </div>
                         </div>
                     </div>
+
+                    <label for="weekly-completion-day-after" class="form-label">Completion Date (After how many days of
+                        assigning the task)</label>
+                    <input class="form-control create-task-input" type="number" id="weekly-completion-day-after"
+                        name="weekly-completion-day-after" value="1" defaultValue="1">
 
                 </div>
                 <div class="recurrence-patteren">
@@ -237,10 +258,11 @@
                     </div>
                     <div class="monthly-start-end-input">
                         <input class="form-control create-task-input" type="date" id="monthly-start-date"
-                            name="monthly-start-date">
+                            name="monthly-start-date" oninput="validateMonthlyDate()">
                         <input class="form-control create-task-input" type="date" id="monthly-end-date"
-                            name="monthly-end-date">
+                            name="monthly-end-date" oninput="validateMonthlyDate()">
                     </div>
+                    <div id="monthly-date-input-error" class="invalid-feedback"></div>
 
                     Select days option
                     <div class="select-days-monthly">
@@ -252,7 +274,7 @@
                                 <div class="first-column-monthly">
                                     <% for (let i=1; i <=8; i++) { %>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="recurrence"
+                                            <input class="form-check-input" type="checkbox" name="monthly-recurrence"
                                                 id="m-<%= i %>" value="m-<%= i %>">
                                             <label class="form-check-label" for="m-<%= i %>">
                                                 <%= getNumberWithSuffix(i) %>
@@ -263,7 +285,7 @@
                                 <div class="second-column-monthly">
                                     <% for (let i=9; i <=16; i++) { %>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="recurrence"
+                                            <input class="form-check-input" type="checkbox" name="monthly-recurrence"
                                                 id="m-<%= i %>" value="m-<%= i %>">
                                             <label class="form-check-label" for="m-<%= i %>">
                                                 <%= getNumberWithSuffix(i) %>
@@ -274,7 +296,7 @@
                                 <div class="third-column-monthly">
                                     <% for (let i=17; i <=24; i++) { %>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="recurrence"
+                                            <input class="form-check-input" type="checkbox" name="monthly-recurrence"
                                                 id="m-<%= i %>" value="m-<%= i %>">
                                             <label class="form-check-label" for="m-<%= i %>">
                                                 <%= getNumberWithSuffix(i) %>
@@ -285,7 +307,7 @@
                                 <div class="fourth-column-monthly">
                                     <% for (let i=25; i <=31; i++) { %>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="recurrence"
+                                            <input class="form-check-input" type="checkbox" name="monthly-recurrence"
                                                 id="m-<%= i %>" value="m-<%= i %>">
                                             <label class="form-check-label" for="m-<%= i %>">
                                                 <%= getNumberWithSuffix(i) %>
@@ -294,10 +316,16 @@
                                         <% } %>
                                 </div>
                     </div>
+
+                    <label for="monthly-completion-day-after" class="form-label">Completion Date (After how many days of
+                        assigning the task)</label>
+                    <input class="form-control create-task-input" type="number" id="monthly-completion-day-after"
+                        name="monthly-completion-day-after" value="1" defaultValue="1">
+
                 </div>
 
                 <input class="form-check-input create-task-input" type="checkbox" id="meeting-needed"
-                    name="meeting-needed">
+                    name="meeting-needed" value="meeting_needed">
                 <label class="form-label"> Do you want to call a meeting with the defaulters on some specific
                     date</label>
 
@@ -353,10 +381,11 @@
                         <input class="form-control" type="time" id="custom-meeting-time" name="custom-meeting-time">
                     </div>
                     <button id="add-custom-meeting-date-and-time" class="btn btn-success">Add Date</button>
+                    <input type="hidden" name="custom-hidden-meeting-date-time" id="custom-hidden-meeting-date-time">
                 </div>
 
             </div>
-            <input class="btn btn-success w-100" type="submit" value="Get OTP">
+            <input class="btn btn-success w-100" type="submit" value="Proceed">
         </form>
 
     </div>
@@ -457,7 +486,7 @@
         const endDateInput = document.getElementById("custom-end-date");
         const addButton = document.getElementById("add-custom-date");
         const datesList = document.getElementById("custom-dates-list");
-        const dates = [];
+        let dates = [];
 
         addButton.addEventListener("click", function (event) {
             event.preventDefault(); // prevent form submission
@@ -471,27 +500,79 @@
             }
 
             dates.push([startDate, endDate]);
+
+            // Update the hidden input field value
+            document.getElementById('custom-hidden-start-end-date').value = JSON.stringify(dates);
+
             let output = '';
             for (let i = 0; i < dates.length; i++) {
-                // console.log(typeof(dates[i][0]));
-                output += `${i + 1}. Trigger date: ${dates[i][0]} || Completed By: ${dates[i][1]} <br/>`;
-                // output += dates[i][0] + ' - ' + dates[i][1] + '\n'
+                output += `${i + 1}. Trigger date: ${dates[i][0]} || Completed By: ${dates[i][1]} <button class="btn delete-btn"><i class="fas fa-trash"></i></button><br/>`;
             }
 
             datesList.innerHTML = output;
 
             // call the submit button enabled function
-            checkFormValidity()
+            checkFormValidity();
 
             // scroll to the bottom of the page
-            // Scroll to the button
-            // scroll to the new date element
             const newDateElement = datesList.lastElementChild;
             newDateElement.scrollIntoView({ behavior: "smooth" });
 
+            // clear inputs
             startDateInput.value = "";
             endDateInput.value = "";
+
+            // add event listener to each delete button
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+            for (let i = 0; i < deleteButtons.length; i++) {
+                deleteButtons[i].addEventListener('click', function (event) {
+                    event.preventDefault();
+                    dates.splice(i, 1);
+
+                    // Update the hidden input field value
+                    document.getElementById('custom-hidden-start-end-date').value = JSON.stringify(dates);
+
+                    let output = '';
+                    for (let j = 0; j < dates.length; j++) {
+                        output += `${j + 1}. Trigger date: ${dates[j][0]} || Completed By: ${dates[j][1]} <button class="btn delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+                    }
+                    datesList.innerHTML = output;
+
+                    // call the submit button enabled function
+                    checkFormValidity();
+
+                    // add event listener again after deleting an item
+                    addDeleteListeners();
+                });
+            }
         });
+
+        function addDeleteListeners() {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+            for (let i = 0; i < deleteButtons.length; i++) {
+                deleteButtons[i].addEventListener('click', function (event) {
+                    event.preventDefault();
+                    dates.splice(i, 1);
+
+                    // Update the hidden input field value
+                    document.getElementById('custom-hidden-start-end-date').value = JSON.stringify(dates);
+
+                    let output = '';
+                    for (let j = 0; j < dates.length; j++) {
+                        output += `${j + 1}. Trigger date: ${dates[j][0]} || Completed By: ${dates[j][1]} <button class="btn delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+                    }
+                    datesList.innerHTML = output;
+                    // call the submit button enabled function
+                    checkFormValidity();
+
+                    // add event listener again after deleting an item
+                    addDeleteListeners();
+                });
+            }
+        }
+
+        addDeleteListeners();
+
 
         // ------------------------------------------------------------------------------------------
 
@@ -507,6 +588,30 @@
                 meetingNeededDiv.style.display = "none";
             }
         });
+
+        // -----------------------------------------------------------------------------------------
+
+        const meetingPreferanceCheckboxes = document.getElementsByName("meeting-preferance-day-type");
+
+        meetingNeededCheckbox.addEventListener("change", function () {
+            if (!meetingNeededCheckbox.checked) {
+                for (let i = 0; i < meetingPreferanceCheckboxes.length; i++) {
+                    meetingPreferanceCheckboxes[i].checked = false;
+                }
+                const mailDayBeforeSameAfterDiv = document.querySelector(".mail-day-before-same-after-time");
+                const customDateDiv = document.querySelector(".custom-meeting-date-and-time");
+                const customMeetingDateInput = document.getElementById("custom-meeting-date");
+                const customMeetingTimeInput = document.getElementById("custom-meeting-time");
+                const beforeSameAfterTimeInput = document.getElementById("before-same-after-time")
+
+                mailDayBeforeSameAfterDiv.style.display = "none"
+                customDateDiv.style.display = "none"
+                customMeetingDateInput.value = ""
+                customMeetingTimeInput.value = ""
+                beforeSameAfterTimeInput.value = ""
+            }
+        });
+
 
         // -----------------------------------------------------------------------------------------
 
@@ -556,11 +661,12 @@
 
         // ---------------------------------------------------------------------------------------------------
 
-        const customMeetingDateInput = document.getElementById("custom-meeting-date");
-        const customMeetingTimeInput = document.getElementById("custom-meeting-time");
         const addCustomMeetingButton = document.getElementById("add-custom-meeting-date-and-time");
         const customMeetingDatesList = document.getElementById("custom-meeting-date-and-time-list");
-        const customMeetingDates = [];
+        const customMeetingDateInput = document.getElementById("custom-meeting-date");
+        const customMeetingTimeInput = document.getElementById("custom-meeting-time");
+        const clearCustomMeetingCheckbox = document.getElementById("clear-custom-meeting");
+        let customMeetingDates = [];
 
         addCustomMeetingButton.addEventListener("click", function (event) {
             event.preventDefault(); // prevent form submission
@@ -574,24 +680,78 @@
             }
 
             customMeetingDates.push([meetingDate, meetingTime]);
+
+            // Update the hidden input field value
+            document.getElementById('custom-hidden-meeting-date-time').value = JSON.stringify(customMeetingDates);
+
             let output = '';
             for (let i = 0; i < customMeetingDates.length; i++) {
-                // console.log(typeof(dates[i][0]));
-                output += `${i + 1}. Meeting date: ${customMeetingDates[i][0]} || Meeting Time: ${customMeetingDates[i][1]} <br/>`;
-                // output += dates[i][0] + ' - ' + dates[i][1] + '\n'
+                output += `${i + 1}. Meeting date: ${customMeetingDates[i][0]} || Meeting Time: ${customMeetingDates[i][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
             }
 
             customMeetingDatesList.innerHTML = output;
 
+            // enable/disable the submit button
+            checkFormValidity();
+
             // scroll to the bottom of the page
-            // Scroll to the button
-            // scroll to the new date element
             const newDateElement = customMeetingDatesList.lastElementChild;
             newDateElement.scrollIntoView({ behavior: "smooth" });
 
             customMeetingDateInput.value = "";
             customMeetingTimeInput.value = "";
+
+            const meetingDeleteButtons = document.querySelectorAll('.meeting-delete-btn');
+            for (let i = 0; i < meetingDeleteButtons.length; i++) {
+                meetingDeleteButtons[i].addEventListener('click', function (event) {
+                    event.preventDefault();
+                    customMeetingDates.splice(i, 1);
+
+                    // Update the hidden input field value
+                    document.getElementById('custom-hidden-meeting-date-time').value = JSON.stringify(customMeetingDates);
+
+                    let output = '';
+                    for (let j = 0; j < customMeetingDates.length; j++) {
+                        output += `${j + 1}. Meeting date: ${customMeetingDates[j][0]} || Meeting Time: ${customMeetingDates[j][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+                    }
+                    customMeetingDatesList.innerHTML = output;
+
+                    // enable/disable the submit button
+                    checkFormValidity();
+
+                    // add event listener again after deleting an item
+                    addMeetingDeleteListeners();
+                });
+            }
         });
+
+        function addMeetingDeleteListeners() {
+            const meetingDeleteButtons = document.querySelectorAll('.meeting-delete-btn');
+            for (let i = 0; i < meetingDeleteButtons.length; i++) {
+                meetingDeleteButtons[i].addEventListener('click', function (event) {
+                    event.preventDefault();
+                    customMeetingDates.splice(i, 1);
+
+                    // Update the hidden input field value
+                    document.getElementById('custom-hidden-meeting-date-time').value = JSON.stringify(customMeetingDates);
+
+                    let output = '';
+                    for (let j = 0; j < customMeetingDates.length; j++) {
+                        output += `${j + 1}. Meeting date: ${customMeetingDates[j][0]} || Meeting Time: ${customMeetingDates[j][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+                    }
+                    customMeetingDatesList.innerHTML = output;
+
+                    // enable/disable the submit button
+                    checkFormValidity();
+
+                    // add event listener again after deleting an item
+                    addMeetingDeleteListeners();
+                });
+            }
+        }
+
+        addMeetingDeleteListeners();
+
 
         // --------------------------------------------------------------------------------------------------
 
@@ -630,7 +790,6 @@
         // Get the form and submit button
         const form = document.querySelector('form');
         const submitButton = form.querySelector('input[type="submit"]');
-        const customDateRadio = document.getElementById('custom');
 
         // Disable the submit button by default
         submitButton.disabled = true;
@@ -643,12 +802,108 @@
             // Check if the custom date radio button is selected and there are no dates
             const noDates = dates.length === 0;
 
+            // get the daily start and end date
+            const dailyStartDate = document.getElementById('daily-start-date');
+            const dailyEndDate = document.getElementById('daily-end-date');
+
+            // get weekly start and end date
+            const weeklyStartDate = document.getElementById('weekly-start-date')
+            const weeklyEndDate = document.getElementById('weekly-end-date')
+
+            // get weekly start and end date
+            const monthlyStartDate = document.getElementById('monthly-start-date')
+            const monthlyEndDate = document.getElementById('monthly-end-date')
+
+            // check any of the weekly checkbox is checked or not
+            let weeklyChecked = false;
+            if (weeklyRadio.checked) {
+                const checkboxes = document.querySelectorAll('input[name="weekly-recurrence"]');
+
+                checkboxes.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        weeklyChecked = true;
+                    }
+                });
+            }
+
+            // check any of the monthly checkbox is checked or not
+            let monthlyChecked = false;
+            if (monthlyRadio.checked) {
+                const checkboxes = document.querySelectorAll('input[name="monthly-recurrence"]');
+
+                checkboxes.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        monthlyChecked = true;
+                    }
+                });
+            }
+
+            // for the email-needed section
+            const meetingNeeded = document.getElementById('meeting-needed')
+
+            // if meetingNeeded is selected then any of the fellow checkbox must be selected
+            let meetingChecked = false
+            if (meetingNeeded.checked) {
+                const checkboxes = document.querySelectorAll('input[name="meeting-preferance-day-type"]');
+
+                checkboxes.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        meetingChecked = true;
+                    }
+                });
+            }
+
+            const mailDayBeforeCheckbox = document.getElementById('day-before')
+            const mailDaySameCheckbox = document.getElementById('day-same')
+            const mailDayAfterCheckbox = document.getElementById('day-after')
+            const mailDayCustomCheckbox = document.getElementById('day-custom')
+
+            const beforeSameAfterTimeInput = document.getElementById('before-same-after-time');
+            // Check if the custom date radio button is selected and there are no dates
+            const noCustomMailNeededDates = customMeetingDates.length !== 0;
+
+            let meetingInputDateTime = false
+            if (mailDayCustomCheckbox.checked) {
+                if (noCustomMailNeededDates) {
+                    meetingInputDateTime = true
+                }
+            } else {
+                meetingInputDateTime = true
+            }
+            
+            let meetingInputTime = false
+            if (mailDayBeforeCheckbox.checked || mailDaySameCheckbox.checked || mailDayAfterCheckbox.checked) {
+                if (beforeSameAfterTimeInput.value !== '') {
+                    meetingInputTime = true
+                }
+            } else {
+                meetingInputTime = true
+            }
+
             // logs
             // console.log("valid " + valid);
-            // console.log("customDateRadio.checked " + customDateRadio.checked);
+            // console.log("customDateRadio.checked " + customRadio.checked);
             // console.log("noDates " + noDates);
+            // console.log(weeklyStartDate.value === '' || weeklyEndDate.value === '');
+            // if (meetingNeeded.checked) {
+            //     console.log("only time " + (beforeSameAfterTimeInput.value !== ''));
+            //     console.log("date " + (customMeetingDateInput.value !== ''));
+            //     console.log("time " + (customMeetingTimeInput.value !== ''));
+            //     console.log("meetingchecked ", meetingChecked);
+            //     console.log("meetingInput ", meetingInput);
+            // }
 
-            if (customDateRadio.checked && noDates) {
+            if (customRadio.checked && noDates) {
+                submitButton.disabled = true;
+            } else if (dailyRadio.checked && (dailyStartDate.value === '' || dailyEndDate.value === '' || (dailyStartDate.value > dailyEndDate.value))) {
+                submitButton.disabled = true;
+            } else if (weeklyRadio.checked && (!weeklyChecked || weeklyStartDate.value === '' || weeklyEndDate.value === '')) {
+                submitButton.disabled = true;
+            } else if (monthlyRadio.checked && (!monthlyChecked || monthlyStartDate.value === '' || monthlyEndDate.value === '')) {
+                submitButton.disabled = true;
+            } else if (meetingNeeded.checked && !meetingChecked) {
+                submitButton.disabled = true;
+            } else if (meetingNeeded.checked && meetingChecked && !(meetingInputDateTime && meetingInputTime)) {
                 submitButton.disabled = true;
             } else {
                 // Enable/disable the submit button based on validity
@@ -726,20 +981,125 @@
             const endDateInput = document.getElementById("custom-end-date");
             const addButton = document.getElementById("add-custom-date");
 
-            if (startDateInput.value > endDateInput.value) {
-                startDateInput.classList.add("is-invalid");
-                endDateInput.classList.add("is-invalid");
-                const customDateInputError = document.getElementById("custom-date-input-error");
-                customDateInputError.textContent = "Last date of completion must be atleast on day after the trigger date";
-                customDateInputError.style.display = "block";
-                addButton.disabled = true;
+            // logs
+            // console.log("start date " + startDateInput.value);
+            // console.log("end date " + endDateInput.value);
+            // console.log(startDateInput.value === '' || endDateInput.value === '');
+
+            if (startDateInput.value === '' || endDateInput.value === '') {
+                // console.log("in the if");
+                return 0
             } else {
-                startDateInput.classList.remove("is-invalid");
-                endDateInput.classList.remove("is-invalid");
-                document.getElementById("custom-date-input-error").style.display = "none";
-                addButton.disabled = false;
+                // console.log("in the else");
+                if (startDateInput.value > endDateInput.value) {
+                    startDateInput.classList.add("is-invalid");
+                    endDateInput.classList.add("is-invalid");
+                    const customDateInputError = document.getElementById("custom-date-input-error");
+                    customDateInputError.textContent = "Last date of completion must be atleast on day after the trigger date";
+                    customDateInputError.style.display = "block";
+                    addButton.disabled = true;
+                } else {
+                    startDateInput.classList.remove("is-invalid");
+                    endDateInput.classList.remove("is-invalid");
+                    document.getElementById("custom-date-input-error").style.display = "none";
+                    addButton.disabled = false;
+                }
             }
         }
+
+        // check 'start date' is less than the 'end' or not
+        // in the daily section
+        function validateDailyDate() {
+            const startDateInput = document.getElementById("daily-start-date");
+            const endDateInput = document.getElementById("daily-end-date");
+
+            // logs
+            // console.log("start date " + startDateInput.value);
+            // console.log("end date " + endDateInput.value);
+            // console.log(startDateInput.value === '' || endDateInput.value === '');
+
+            if (startDateInput.value === '' || endDateInput.value === '') {
+                return 0
+            } else {
+                if (startDateInput.value > endDateInput.value) {
+                    startDateInput.classList.add("is-invalid");
+                    endDateInput.classList.add("is-invalid");
+                    const customDateInputError = document.getElementById("daily-date-input-error");
+                    customDateInputError.textContent = "Last date of completion must be atleast on day after the start date";
+                    customDateInputError.style.display = "block";
+
+                    // scroll to the bottom of the page
+                    document.getElementById('meeting-needed').scrollIntoView({ behavior: "smooth" })
+                } else {
+                    startDateInput.classList.remove("is-invalid");
+                    endDateInput.classList.remove("is-invalid");
+                    document.getElementById("daily-date-input-error").style.display = "none";
+                }
+            }
+        }
+
+        // check 'start date' is less than the 'end' or not
+        // in the weekly section
+        function validateWeeklyDate() {
+            const startDateInput = document.getElementById("weekly-start-date");
+            const endDateInput = document.getElementById("weekly-end-date");
+
+            // logs
+            // console.log("start date " + startDateInput.value);
+            // console.log("end date " + endDateInput.value);
+            // console.log(startDateInput.value === '' || endDateInput.value === '');
+
+            if (startDateInput.value === '' || endDateInput.value === '') {
+                return 0
+            } else {
+                if (startDateInput.value > endDateInput.value) {
+                    startDateInput.classList.add("is-invalid");
+                    endDateInput.classList.add("is-invalid");
+                    const customDateInputError = document.getElementById("weekly-date-input-error");
+                    customDateInputError.textContent = "Last date of completion must be atleast on day after the start date";
+                    customDateInputError.style.display = "block";
+
+                    // scroll to the bottom of the page
+                    document.getElementById('meeting-needed').scrollIntoView({ behavior: "smooth" })
+                } else {
+                    startDateInput.classList.remove("is-invalid");
+                    endDateInput.classList.remove("is-invalid");
+                    document.getElementById("weekly-date-input-error").style.display = "none";
+                }
+            }
+        }
+
+        // check 'start date' is less than the 'end' or not
+        // in the monthly section
+        function validateMonthlyDate() {
+            const startDateInput = document.getElementById("monthly-start-date");
+            const endDateInput = document.getElementById("monthly-end-date");
+
+            // logs
+            // console.log("start date " + startDateInput.value);
+            // console.log("end date " + endDateInput.value);
+            // console.log(startDateInput.value === '' || endDateInput.value === '');
+
+            if (startDateInput.value === '' || endDateInput.value === '') {
+                return 0
+            } else {
+                if (startDateInput.value > endDateInput.value) {
+                    startDateInput.classList.add("is-invalid");
+                    endDateInput.classList.add("is-invalid");
+                    const customDateInputError = document.getElementById("monthly-date-input-error");
+                    customDateInputError.textContent = "Last date of completion must be atleast on day after the start date";
+                    customDateInputError.style.display = "block";
+
+                    // scroll to the bottom of the page
+                    document.getElementById('meeting-needed').scrollIntoView({ behavior: "smooth" })
+                } else {
+                    startDateInput.classList.remove("is-invalid");
+                    endDateInput.classList.remove("is-invalid");
+                    document.getElementById("monthly-date-input-error").style.display = "none";
+                }
+            }
+        }
+
 
     </script>
 </body>

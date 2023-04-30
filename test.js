@@ -153,10 +153,341 @@
 // console.log(getNumberWithSuffix(14));
 
 
-function isCommaSeparatedString(str) {
-    const emailPattern = /^([a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)(,[a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)*$/;
-    return emailPattern.test(str);
-}
+// function isCommaSeparatedString(str) {
+//     const emailPattern = /^([a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)(,[a-zA-Z0-9._-]+@gofirst\.onmicrosoft\.com)*$/;
+//     return emailPattern.test(str);
+// }
 
 
-console.log(isCommaSeparatedString("gsgg@gofirst.onmicrosoft.com,"));
+// console.log(isCommaSeparatedString("gsgg@gofirst.onmicrosoft.com,"));
+
+
+// const startDateInput = document.getElementById("custom-start-date");
+// const endDateInput = document.getElementById("custom-end-date");
+// const addButton = document.getElementById("add-custom-date");
+// const datesList = document.getElementById("custom-dates-list");
+// const dates = [];
+
+// addButton.addEventListener("click", function (event) {
+//     event.preventDefault(); // prevent form submission
+
+//     const startDate = startDateInput.value;
+//     const endDate = endDateInput.value;
+
+//     if (!startDate || !endDate) {
+//         alert("Please enter the start and end date");
+//         return;
+//     }
+
+//     dates.push([startDate, endDate]);
+//     let output = '';
+//     for (let i = 0; i < dates.length; i++) {
+//         // console.log(typeof(dates[i][0]));
+//         output += `${i + 1}. Trigger date: ${dates[i][0]} || Completed By: ${dates[i][1]}      <button class="btn delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+//         // output += dates[i][0] + ' - ' + dates[i][1] + '\n'
+//     }
+
+//     datesList.innerHTML = output;
+
+//     // call the submit button enabled function
+//     checkFormValidity()
+
+//     // scroll to the bottom of the page
+//     // Scroll to the button
+//     // scroll to the new date element
+//     const newDateElement = datesList.lastElementChild;
+//     newDateElement.scrollIntoView({ behavior: "smooth" });
+
+//     startDateInput.value = "";
+//     endDateInput.value = "";
+// });
+
+// const addCustomMeetingButton = document.getElementById("add-custom-meeting-date-and-time");
+// const customMeetingDatesList = document.getElementById("custom-meeting-date-and-time-list");
+// const customMeetingDateInput = document.getElementById("custom-meeting-date");
+// const customMeetingTimeInput = document.getElementById("custom-meeting-time");
+// const customMeetingDates = [];
+
+// addCustomMeetingButton.addEventListener("click", function (event) {
+//     event.preventDefault(); // prevent form submission
+
+//     const meetingDate = customMeetingDateInput.value;
+//     const meetingTime = customMeetingTimeInput.value;
+
+//     if (!meetingDate || !meetingTime) {
+//         alert("Please enter the meeting date and time properly");
+//         return;
+//     }
+
+//     customMeetingDates.push([meetingDate, meetingTime]);
+//     let output = '';
+//     for (let i = 0; i < customMeetingDates.length; i++) {
+//         // console.log(typeof(dates[i][0]));
+//         output += `${i + 1}. Meeting date: ${customMeetingDates[i][0]} || Meeting Time: ${customMeetingDates[i][1]} <br/>`;
+//         // output += dates[i][0] + ' - ' + dates[i][1] + '\n'
+
+//     }
+
+//     customMeetingDatesList.innerHTML = output;
+
+//     // scroll to the bottom of the page
+//     // Scroll to the button
+//     // scroll to the new date element
+//     const newDateElement = customMeetingDatesList.lastElementChild;
+//     newDateElement.scrollIntoView({ behavior: "smooth" });
+
+//     customMeetingDateInput.value = "";
+//     customMeetingTimeInput.value = "";
+// });
+
+
+// const startDateInput = document.getElementById("custom-start-date");
+// const endDateInput = document.getElementById("custom-end-date");
+// const addButton = document.getElementById("add-custom-date");
+// const datesList = document.getElementById("custom-dates-list");
+// let dates = [];
+
+// addButton.addEventListener("click", function (event) {
+//     event.preventDefault(); // prevent form submission
+
+//     const startDate = startDateInput.value;
+//     const endDate = endDateInput.value;
+
+//     if (!startDate || !endDate) {
+//         alert("Please enter the start and end date");
+//         return;
+//     }
+
+//     dates.push([startDate, endDate]);
+
+//     let output = '';
+//     for (let i = 0; i < dates.length; i++) {
+//         output += `${i + 1}. Trigger date: ${dates[i][0]} || Completed By: ${dates[i][1]} <button class="btn delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+//     }
+
+//     datesList.innerHTML = output;
+
+//     // call the submit button enabled function
+//     checkFormValidity();
+
+//     // scroll to the bottom of the page
+//     const newDateElement = datesList.lastElementChild;
+//     newDateElement.scrollIntoView({ behavior: "smooth" });
+
+//     // clear inputs
+//     startDateInput.value = "";
+//     endDateInput.value = "";
+
+//     // add event listener to each delete button
+//     const deleteButtons = document.querySelectorAll('.delete-btn');
+//     for (let i = 0; i < deleteButtons.length; i++) {
+//         deleteButtons[i].addEventListener('click', function (event) {
+//             event.preventDefault();
+//             dates.splice(i, 1);
+//             let output = '';
+//             for (let j = 0; j < dates.length; j++) {
+//                 output += `${j + 1}. Trigger date: ${dates[j][0]} || Completed By: ${dates[j][1]} <button class="btn delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+//             }
+//             datesList.innerHTML = output;
+
+//             // call the submit button enabled function
+//             checkFormValidity();
+
+//             // add event listener again after deleting an item
+//             addDeleteListeners();
+//         });
+//     }
+// });
+
+// function addDeleteListeners() {
+//     const deleteButtons = document.querySelectorAll('.delete-btn');
+//     for (let i = 0; i < deleteButtons.length; i++) {
+//         deleteButtons[i].addEventListener('click', function (event) {
+//             event.preventDefault();
+//             dates.splice(i, 1);
+//             let output = '';
+//             for (let j = 0; j < dates.length; j++) {
+//                 output += `${j + 1}. Trigger date: ${dates[j][0]} || Completed By: ${dates[j][1]} <button class="btn delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+//             }
+//             datesList.innerHTML = output;
+//             // call the submit button enabled function
+//             checkFormValidity();
+
+//             // add event listener again after deleting an item
+//             addDeleteListeners();
+//         });
+//     }
+// }
+
+// addDeleteListeners();
+
+
+
+// const customMeetingDateInput = document.getElementById("custom-meeting-date");
+// const customMeetingTimeInput = document.getElementById("custom-meeting-time");
+// const addCustomMeetingButton = document.getElementById("add-custom-meeting-date-and-time");
+// const customMeetingDatesList = document.getElementById("custom-meeting-date-and-time-list");
+// const customMeetingDates = [];
+
+// addCustomMeetingButton.addEventListener("click", function (event) {
+//     event.preventDefault(); // prevent form submission
+
+//     const meetingDate = customMeetingDateInput.value;
+//     const meetingTime = customMeetingTimeInput.value;
+
+//     if (!meetingDate || !meetingTime) {
+//         alert("Please enter the meeting date and time properly");
+//         return;
+//     }
+
+//     customMeetingDates.push([meetingDate, meetingTime]);
+//     let output = '';
+//     for (let i = 0; i < customMeetingDates.length; i++) {
+//         // console.log(typeof(dates[i][0]));
+
+//         output += `${i + 1}. Meeting date: ${customMeetingDates[i][0]} || Meeting Time: ${customMeetingDates[i][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+
+//         // output += dates[i][0] + ' - ' + dates[i][1] + '\n'
+//     }
+
+//     customMeetingDatesList.innerHTML = output;
+
+//     // call the submit button enebled function
+//     // <---- call here ---->
+
+//     // scroll to the bottom of the page
+//     const newDateElement = customMeetingDatesList.lastElementChild;
+//     newDateElement.scrollIntoView({ behavior: "smooth" });
+
+//     customMeetingDateInput.value = "";
+//     customMeetingTimeInput.value = "";
+
+//     const meetingDeleteButtons = document.querySelectorAll('.meeting-delete-btn');
+//     for (let i = 0; i < meetingDeleteButtons.length; i++) {
+//         meetingDeleteButtons[i].addEventListener('click', function (event) {
+//             event.preventDefault();
+//             customMeetingDates.splice(i, 1);
+//             let output = '';
+//             for (let j = 0; j < customMeetingDates.length; j++) {
+//                 output += `${i + 1}. Meeting date: ${customMeetingDates[i][0]} || Meeting Time: ${customMeetingDates[i][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+//             }
+//             customMeetingDatesList.innerHTML = output;
+
+//             // call the submit button enabled function
+//             // <---- call here ---->
+
+//             // add event listener again after deleting an item
+//             addMeetingDeleteListeners();
+//         });
+//     }
+// });
+
+// function addMeetingDeleteListeners() {
+//     const meetingDeleteButtons = document.querySelectorAll('.meeting-delete-btn');
+//     for (let i = 0; i < meetingDeleteButtons.length; i++) {
+//         meetingDeleteButtons[i].addEventListener('click', function (event) {
+//             event.preventDefault();
+//             customMeetingDates.splice(i, 1);
+//             let output = '';
+//             for (let j = 0; j < customMeetingDates.length; j++) {
+//                 output += `${i + 1}. Meeting date: ${customMeetingDates[i][0]} || Meeting Time: ${customMeetingDates[i][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+//             }
+//             customMeetingDatesList.innerHTML = output;
+
+//             // call the submit button enabled function
+//             // checkFormValidity();
+
+//             // add event listener again after deleting an item
+//             addMeetingDeleteListeners();
+//         });
+//     }
+// }
+
+// addMeetingDeleteListeners()
+
+
+
+
+
+// const addCustomMeetingButton = document.getElementById("add-custom-meeting-date-and-time");
+// const customMeetingDatesList = document.getElementById("custom-meeting-date-and-time-list");
+// const customMeetingDateInput = document.getElementById("custom-meeting-date");
+// const customMeetingTimeInput = document.getElementById("custom-meeting-time");
+// const clearCustomMeetingCheckbox = document.getElementById("clear-custom-meeting");
+// let customMeetingDates = [];
+
+// addCustomMeetingButton.addEventListener("click", function (event) {
+//     event.preventDefault(); // prevent form submission
+
+//     const meetingDate = customMeetingDateInput.value;
+//     const meetingTime = customMeetingTimeInput.value;
+
+//     if (!meetingDate || !meetingTime) {
+//         alert("Please enter the meeting date and time properly");
+//         return;
+//     }
+
+//     customMeetingDates.push([meetingDate, meetingTime]);
+//     let output = '';
+//     for (let i = 0; i < customMeetingDates.length; i++) {
+//         output += `${i + 1}. Meeting date: ${customMeetingDates[i][0]} || Meeting Time: ${customMeetingDates[i][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+//     }
+
+//     customMeetingDatesList.innerHTML = output;
+
+//     // enable/disable the submit button
+//     checkFormValidity();
+
+//     // scroll to the bottom of the page
+//     const newDateElement = customMeetingDatesList.lastElementChild;
+//     newDateElement.scrollIntoView({ behavior: "smooth" });
+
+//     customMeetingDateInput.value = "";
+//     customMeetingTimeInput.value = "";
+
+//     const meetingDeleteButtons = document.querySelectorAll('.meeting-delete-btn');
+//     for (let i = 0; i < meetingDeleteButtons.length; i++) {
+//         meetingDeleteButtons[i].addEventListener('click', function (event) {
+//             event.preventDefault();
+//             customMeetingDates.splice(i, 1);
+//             let output = '';
+//             for (let j = 0; j < customMeetingDates.length; j++) {
+//                 output += `${j + 1}. Meeting date: ${customMeetingDates[j][0]} || Meeting Time: ${customMeetingDates[j][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+//             }
+//             customMeetingDatesList.innerHTML = output;
+
+//             // enable/disable the submit button
+//             checkFormValidity();
+
+//             // add event listener again after deleting an item
+//             addMeetingDeleteListeners();
+//         });
+//     }
+// });
+
+// function addMeetingDeleteListeners() {
+//     const meetingDeleteButtons = document.querySelectorAll('.meeting-delete-btn');
+//     for (let i = 0; i < meetingDeleteButtons.length; i++) {
+//         meetingDeleteButtons[i].addEventListener('click', function (event) {
+//             event.preventDefault();
+//             customMeetingDates.splice(i, 1);
+//             let output = '';
+//             for (let j = 0; j < customMeetingDates.length; j++) {
+//                 output += `${j + 1}. Meeting date: ${customMeetingDates[j][0]} || Meeting Time: ${customMeetingDates[j][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+//             }
+//             customMeetingDatesList.innerHTML = output;
+
+//             // enable/disable the submit button
+//             checkFormValidity();
+
+//             // add event listener again after deleting an item
+//             addMeetingDeleteListeners();
+//         });
+//     }
+// }
+
+// addMeetingDeleteListeners();
+
+
+
+<input class="btn btn-success w-100" type="submit" value="Proceed"></input>
