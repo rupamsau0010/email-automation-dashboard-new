@@ -1,341 +1,362 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../static/background-img.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login {
+  width: 360px;
+  height: min-content;
+  padding: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login h1 {
+  font-size: 36px;
+  margin-bottom: 25px;
+}
+
+.login form {
+  font-size: 20px;
+}
+
+.login form .form-group {
+  margin-bottom: 12px;
+}
+
+.login form input[type="submit"] {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.task-comletion-status {
+  margin-top: 20px;
+}
+
+.btn-main-page {
+  margin-top: 20px;
+}
+
+.data-outer {
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+.data-form {
+  text-align: center;
+}
+
+.table-container {
+  width: 1300px;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead th,
+.table tbody td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.table thead th {
+  background-color: #f2f2f2;
+}
+
+.data-button {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.no-data-h2 {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  width: 1300px;
+  height: 500px;
+  padding-top: 170px;
+  padding-bottom: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.create-new-task-h2 h2 {
+  font-size: 24px;
+  color: #333;
+  margin-top: 30px;
+  justify-content: center;
+  text-align: center;
+}
+
+/* create task page */
+.create-task {
+  /* width: 860px; */
+  height: min-content;
+  padding: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.create-task h1 {
+  font-size: 36px;
+  margin-bottom: 25px;
+}
+
+.create-task form {
+  font-size: 20px;
+}
+
+.create-task form .form-group {
+  margin-bottom: 12px;
+}
+
+.create-task form input[type="submit"] {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.create-task-input {
+  margin-bottom: 20px;
+}
+
+.create-new-task-size {
+  width: 1300px;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+/* ------------------------------------------ */
+#add-custom-date {
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+.custom-date-label {
+  display: flex;
+  justify-content: left;
+}
+
+.custom-end-date-label {
+  margin-left: 37.5%;
+}
+
+.custom-date-label label {
+  margin-right: 10px;
+}
+
+.custom-date {
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-date input {
+  margin-right: 10px;
+}
+
+/* ------------------------------------- */
+
+.meeting-needed-div {
+  display: none;
+}
+
+/* ------------------------------------- */
+
+.mail-day-before-same-after-time {
+  display: none;
+}
+
+/* ------------------------------------- */
+
+.custom-meeting-date-and-time {
+  display: none;
+}
+
+#add-custom-meeting-date-and-time {
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+.custom-meeting-date-and-time-label {
+  display: flex;
+  justify-content: left;
+}
+
+/* .custom-start-meeting-date-and-time-label {
   
-  body {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('../static/background-img.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  
-  .login {
-    width: 360px;
-    height: min-content;
-    padding: 20px;
-    border-radius: 12px;
-    background: #ffffff;
-  }
-  
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .login h1 {
-    font-size: 36px;
-    margin-bottom: 25px;
-  }
-  
-  .login form {
-    font-size: 20px;
-  }
-  
-  .login form .form-group {
-    margin-bottom: 12px;
-  }
-  
-  .login form input[type="submit"] {
-    font-size: 20px;
-    margin-top: 15px;
-  }
-  
-  .task-comletion-status {
-    margin-top: 20px;
-  }
-  
-  .btn-main-page {
-    margin-top: 20px;
-  }
-  
-  .data-outer {
-    background-color: #ffffff;
-    border-radius: 12px;
-  }
-  
-  .data-form {
-    text-align: center;
-  }
+} */
 
-  .table-container {
-    width: 1300px;
-    height: 500px;
-    overflow-y: scroll;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .table thead th,
-  .table tbody td {
-    padding: 8px;
-    text-align: center;
-    border: 1px solid #ddd;
-  }
-  
-  .table thead th {
-    background-color: #f2f2f2;
-  }  
-  
-  .data-button {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    display: inline-block;
-  }
+.custom-middle-meeting-date-and-time-label {
+  margin-left: 21.9%;
+}
 
-  .no-data-h2 {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    width: 1300px;
-    height: 500px;
-    padding-top: 170px;
-    padding-bottom: 20px;
-    padding-left: 50px;
-    padding-right: 50px;
-  }
+.custom-end-meeting-date-and-time-label {
+  margin-left: 24.5%;
+}
 
-  .create-new-task-h2 h2 {
-    font-size: 24px;
-    color: #333;
-    margin-top: 30px;
-    justify-content: center;
-    text-align: center;
-  }
 
-  /* create task page */
-  .create-task {
-    /* width: 860px; */
-    height: min-content;
-    padding: 20px;
-    border-radius: 12px;
-    background: #ffffff;
-  }
+/* .custom-meeting-date-and-time-label label {
+  margin-right: 10px;
+} */
 
-  .create-task h1 {
-    font-size: 36px;
-    margin-bottom: 25px;
-  }
-  
-  .create-task form {
-    font-size: 20px;
-  }
-  
-  .create-task form .form-group {
-    margin-bottom: 12px;
-  }
-  
-  .create-task form input[type="submit"] {
-    font-size: 20px;
-    margin-top: 15px;
-  }
+.custom-meeting-date-and-time-input {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .create-task-input {
-    margin-bottom: 20px;
-  }
+.custom-meeting-date-and-time-input input {
+  margin-right: 10px;
+}
 
-  .create-new-task-size {
-    width: 1300px;
-    height: 500px;
-    overflow-y: scroll;
-  }
+#custom-meeting-before-after {
+  margin-right: 10px;
+}
 
-  /* ------------------------------------------ */
-  #add-custom-date {
-    display: block;
-    margin-top: 8px;
-    margin-bottom: 20px;
-  }
+/* daily start-date and end-date */
 
-  .custom-date-label {
-    display: flex;
-    justify-content: left;
-  }
+.daily-start-end-label {
+  display: flex;
+  justify-content: left;
+}
 
-  .custom-end-date-label {
-    margin-left: 37.5%;
-  }
-  
-  .custom-date-label label {
-    margin-right: 10px;
-  }
-  
-  .custom-date {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .custom-date input {
-    margin-right: 10px;
-  } 
+.daily-end-label {
+  margin-left: 42.3%;
+}
 
-  /* ------------------------------------- */
+.daily-start-end-label label {
+  margin-right: 10px;
+}
 
-  .meeting-needed-div {
-    display: none;
-  }
+.daily-start-end-input {
+  display: flex;
+  justify-content: space-between;
+}
 
-  /* ------------------------------------- */
+.daily-start-end-input input {
+  margin-right: 10px;
+}
 
-  .mail-day-before-same-after-time {
-    display: none;
-  }
+/* ---------------------------- */
+/* weekly start date and end date */
 
-  /* ------------------------------------- */
+.weekly-start-end-label {
+  display: flex;
+  justify-content: left;
+}
 
-  .custom-meeting-date-and-time {
-    display: none;
-  }
+.weekly-end-label {
+  margin-left: 42.3%;
+}
 
-  #add-custom-meeting-date-and-time {
-    display: block;
-    margin-top: 8px;
-    margin-bottom: 20px;
-  }
+.weekly-start-end-label label {
+  margin-right: 10px;
+}
 
-  .custom-meeting-date-and-time-label {
-    display: flex;
-    justify-content: left;
-  }
+.weekly-start-end-input {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .custom-end-meeting-date-and-time-label {
-    margin-left: 40.5%;
-  }
-  
-  .custom-meeting-date-and-time-label label {
-    margin-right: 10px;
-  }
-  
-  .custom-meeting-date-and-time-input {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .custom-meeting-date-and-time-input input {
-    margin-right: 10px;
-  }  
+.weekly-start-end-input input {
+  margin-right: 10px;
+}
 
-  /* daily start-date and end-date */
+/* ---------------------------- */
+/* monthly start date and end date */
 
-  .daily-start-end-label {
-    display: flex;
-    justify-content: left;
-  }
+.monthly-start-end-label {
+  display: flex;
+  justify-content: left;
+}
 
-  .daily-end-label {
-    margin-left: 42.3%;
-  }
+.monthly-end-label {
+  margin-left: 42.3%;
+}
 
-  .daily-start-end-label label {
-    margin-right: 10px;
-  }
+.monthly-start-end-label label {
+  margin-right: 10px;
+}
 
-  .daily-start-end-input {
-    display: flex;
-    justify-content: space-between;
-  }
+.monthly-start-end-input {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .daily-start-end-input input {
-    margin-right: 10px;
-  }
+.monthly-start-end-input input {
+  margin-right: 10px;
+}
 
-  /* ---------------------------- */
-  /* weekly start date and end date */
-  
-  .weekly-start-end-label {
-    display: flex;
-    justify-content: left;
-  }
+/* -------------------------------- */
 
-  .weekly-end-label {
-    margin-left: 42.3%;
-  }
+/* Set the display property of the parent element to flex */
+.select-days-weekly {
+  display: flex;
+}
 
-  .weekly-start-end-label label {
-    margin-right: 10px;
-  }
+/* Set the width of each child element to 50% */
+.single-day,
+.multiple-day {
+  width: 50%;
+}
 
-  .weekly-start-end-input {
-    display: flex;
-    justify-content: space-between;
-  }
+/* Set the padding and box-sizing of each child element */
+.single-day,
+.multiple-day {
+  padding: 10px;
+  box-sizing: border-box;
+}
 
-  .weekly-start-end-input input {
-    margin-right: 10px;
-  }
+/* ---------------------------- */
 
-  /* ---------------------------- */
-  /* monthly start date and end date */
+.select-days-monthly {
+  display: flex;
+}
 
-  .monthly-start-end-label {
-    display: flex;
-    justify-content: left;
-  }
+/* Set the width of each child element to 50% */
+.first-column-monthly,
+.second-column-monthly,
+.third-column-monthly,
+.fourth-column-monthly {
+  width: 25%;
+}
 
-  .monthly-end-label {
-    margin-left: 42.3%;
-  }
+/* Set the padding and box-sizing of each child element */
+.first-column-monthly,
+.second-column-monthly,
+.third-column-monthly,
+.fourth-column-monthly {
+  padding: 10px;
+  box-sizing: border-box;
+}
 
-  .monthly-start-end-label label {
-    margin-right: 10px;
-  }
+/* ---------------------------- */
 
-  .monthly-start-end-input {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .monthly-start-end-input input {
-    margin-right: 10px;
-  }
-
-  /* -------------------------------- */
-
-  /* Set the display property of the parent element to flex */
-  .select-days-weekly {
-    display: flex;
-  }
-
-  /* Set the width of each child element to 50% */
-  .single-day, .multiple-day {
-    width: 50%;
-  }
-
-  /* Set the padding and box-sizing of each child element */
-  .single-day, .multiple-day {
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  /* ---------------------------- */
-
-  .select-days-monthly {
-    display: flex;
-  }
-
-  /* Set the width of each child element to 50% */
-  .first-column-monthly, .second-column-monthly, .third-column-monthly, .fourth-column-monthly {
-    width: 25%;
-  }
-
-  /* Set the padding and box-sizing of each child element */
-  .first-column-monthly, .second-column-monthly, .third-column-monthly, .fourth-column-monthly {
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  /* ---------------------------- */
-
-  /* ------------------------------------------------------------------------------------------------------------- */
-  /* The switch - the box around the slider */
+/* ------------------------------------------------------------------------------------------------------------- */
+/* The switch - the box around the slider */
 /* The switch - the box around the slider */
 .switch {
   position: relative;
@@ -378,11 +399,11 @@
 }
 
 /* When the checkbox is checked, move the slider */
-.switch input:checked + .slider {
+.switch input:checked+.slider {
   background-color: #2196F3;
 }
 
-.switch input:checked + .slider::before {
+.switch input:checked+.slider::before {
   -webkit-transform: translateX(20px);
   -ms-transform: translateX(20px);
   transform: translateX(20px);
@@ -408,4 +429,3 @@
 .meeting-delete-btn .bi-trash {
   margin-right: 5px;
 }
-  

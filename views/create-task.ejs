@@ -76,7 +76,7 @@
                 <div class="cc-skip-group">
                     <label for="cc-times" class="form-label">How many times CC will be skipped (If any).</label>
                     <input class="form-control create-task-input" type="number" id="cc-times" name="cc-times" value="0"
-                        defaultValue="0">
+                        defaultValue="0" min="0">
                 </div>
 
                 <label class="form-label" for="bcc">BCCs</label>
@@ -89,7 +89,7 @@
                 <div class="bcc-skip-group">
                     <label for="bcc-times" class="form-label">How many times BCC will be skipped (If any).</label>
                     <input class="form-control create-task-input" type="number" id="bcc-times" name="bcc-times"
-                        value="0" defaultValue="0">
+                        value="0" defaultValue="0" min="0">
                 </div>
 
                 <label class="form-label">Task recurrence pattern</label>
@@ -155,7 +155,7 @@
                     <label for="daily-completion-day-after" class="form-label">Completion Date (After how many days of
                         assigning the task)</label>
                     <input class="form-control create-task-input" type="number" id="daily-completion-day-after"
-                        name="daily-completion-day-after" value="1" defaultValue="1">
+                        name="daily-completion-day-after" min="0" value="1" defaultValue="1">
 
                 </div>
 
@@ -247,7 +247,7 @@
                     <label for="weekly-completion-day-after" class="form-label">Completion Date (After how many days of
                         assigning the task)</label>
                     <input class="form-control create-task-input" type="number" id="weekly-completion-day-after"
-                        name="weekly-completion-day-after" value="1" defaultValue="1">
+                        name="weekly-completion-day-after" value="1" defaultValue="1" min="0">
 
                 </div>
                 <div class="recurrence-patteren">
@@ -267,8 +267,8 @@
                     Select days option
                     <div class="select-days-monthly">
                         <!-- function for determining the suffix of the date in the month -->
-                        <% function getNumberWithSuffix(number) { if (number % 100>= 11 && number % 100 <= 13) { return
-                                number + "th" ; } else { switch (number % 10) { case 1: return number + "st" ; case 2:
+                        <% function getNumberWithSuffix(number) { if (number % 100>= 11 && number % 100 <= 13) { return number + "th" ; }
+                                else { switch (number % 10) { case 1: return number + "st" ; case 2:
                                 return number + "nd" ; case 3: return number + "rd" ; default: return number + "th" ; }
                                 } } %>
                                 <div class="first-column-monthly">
@@ -320,7 +320,7 @@
                     <label for="monthly-completion-day-after" class="form-label">Completion Date (After how many days of
                         assigning the task)</label>
                     <input class="form-control create-task-input" type="number" id="monthly-completion-day-after"
-                        name="monthly-completion-day-after" value="1" defaultValue="1">
+                        name="monthly-completion-day-after" value="1" defaultValue="1" min="0">
 
                 </div>
 
@@ -371,17 +371,22 @@
                 <div class="custom-meeting-date-and-time">
                     <div class="create-task-input" id="custom-meeting-date-and-time-list"></div>
                     <div class="custom-meeting-date-and-time-label">
-                        <label class="form-label" for="custom-meeting-date">Custom date</label>
+                        <label class="form-label custom-start-meeting-date-and-time-label" for="custom-meeting-how-many-days">How many days</label>
+                        <label class="form-label custom-middle-meeting-date-and-time-label" for="custom-meeting-before-after">Before or after</label>
                         <label class="form-label custom-end-meeting-date-and-time-label"
                             for="custom-meeting-time">Meeting time
                             (reminder - 15 min before)</label>
                     </div>
                     <div class="custom-meeting-date-and-time-input">
-                        <input class="form-control" type="date" id="custom-meeting-date" name="custom-meeting-date">
+                        <input class="form-control" type="number" min="2" value="2" defaultValue="2" id="custom-meeting-how-many-days" name="custom-meeting-how-many-days">
+                        <select class="form-select" id="custom-meeting-before-after" name="custom-meeting-before-after">
+                            <option value="before">Before</option>
+                            <option value="after">After</option>
+                        </select>
                         <input class="form-control" type="time" id="custom-meeting-time" name="custom-meeting-time">
+                        <!-- optional button for only making the submit buttion inactive while all the form inputs are not given -->
+                        <!-- <button type="hidden" id="add-custom-meeting-date-and-time" class="btn btn-success">Add Date</button> -->
                     </div>
-                    <button id="add-custom-meeting-date-and-time" class="btn btn-success">Add Date</button>
-                    <input type="hidden" name="custom-hidden-meeting-date-time" id="custom-hidden-meeting-date-time">
                 </div>
 
             </div>
@@ -487,6 +492,7 @@
         const addButton = document.getElementById("add-custom-date");
         const datesList = document.getElementById("custom-dates-list");
         let dates = [];
+        let customTasksCustomMeetingDates = []
 
         addButton.addEventListener("click", function (event) {
             event.preventDefault(); // prevent form submission
@@ -505,8 +511,10 @@
             document.getElementById('custom-hidden-start-end-date').value = JSON.stringify(dates);
 
             let output = '';
+            let outputCustomMeetingDates = ''
             for (let i = 0; i < dates.length; i++) {
                 output += `${i + 1}. Trigger date: ${dates[i][0]} || Completed By: ${dates[i][1]} <button class="btn delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+                outputCustomMeetingDates += `${i + 1}. Trigger date: ${dates[i][0]} || Completed By: ${dates[i][1]}<br/>`
             }
 
             datesList.innerHTML = output;
@@ -661,96 +669,96 @@
 
         // ---------------------------------------------------------------------------------------------------
 
-        const addCustomMeetingButton = document.getElementById("add-custom-meeting-date-and-time");
-        const customMeetingDatesList = document.getElementById("custom-meeting-date-and-time-list");
-        const customMeetingDateInput = document.getElementById("custom-meeting-date");
-        const customMeetingTimeInput = document.getElementById("custom-meeting-time");
-        const clearCustomMeetingCheckbox = document.getElementById("clear-custom-meeting");
-        let customMeetingDates = [];
+        // const addCustomMeetingButton = document.getElementById("add-custom-meeting-date-and-time");
+        // const customMeetingDatesList = document.getElementById("custom-meeting-date-and-time-list");
+        // const customMeetingDateInput = document.getElementById("custom-meeting-date");
+        // const customMeetingTimeInput = document.getElementById("custom-meeting-time");
+        // const clearCustomMeetingCheckbox = document.getElementById("clear-custom-meeting");
+        // let customMeetingDates = [];
 
-        addCustomMeetingButton.addEventListener("click", function (event) {
-            event.preventDefault(); // prevent form submission
+        // addCustomMeetingButton.addEventListener("click", function (event) {
+        //     event.preventDefault(); // prevent form submission
 
-            const meetingDate = customMeetingDateInput.value;
-            const meetingTime = customMeetingTimeInput.value;
+        //     const meetingDate = customMeetingDateInput.value;
+        //     const meetingTime = customMeetingTimeInput.value;
 
-            if (!meetingDate || !meetingTime) {
-                alert("Please enter the meeting date and time properly");
-                return;
-            }
+        //     if (!meetingDate || !meetingTime) {
+        //         alert("Please enter the meeting date and time properly");
+        //         return;
+        //     }
 
-            customMeetingDates.push([meetingDate, meetingTime]);
+        //     customMeetingDates.push([meetingDate, meetingTime]);
 
-            // Update the hidden input field value
-            document.getElementById('custom-hidden-meeting-date-time').value = JSON.stringify(customMeetingDates);
+        //     // Update the hidden input field value
+        //     document.getElementById('custom-hidden-meeting-date-time').value = JSON.stringify(customMeetingDates);
 
-            let output = '';
-            for (let i = 0; i < customMeetingDates.length; i++) {
-                output += `${i + 1}. Meeting date: ${customMeetingDates[i][0]} || Meeting Time: ${customMeetingDates[i][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
-            }
+        //     let output = '';
+        //     for (let i = 0; i < customMeetingDates.length; i++) {
+        //         output += `${i + 1}. Meeting date: ${customMeetingDates[i][0]} || Meeting Time: ${customMeetingDates[i][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+        //     }
 
-            customMeetingDatesList.innerHTML = output;
+        //     customMeetingDatesList.innerHTML = output;
 
-            // enable/disable the submit button
-            checkFormValidity();
+        //     // enable/disable the submit button
+        //     checkFormValidity();
 
-            // scroll to the bottom of the page
-            const newDateElement = customMeetingDatesList.lastElementChild;
-            newDateElement.scrollIntoView({ behavior: "smooth" });
+        //     // scroll to the bottom of the page
+        //     const newDateElement = customMeetingDatesList.lastElementChild;
+        //     newDateElement.scrollIntoView({ behavior: "smooth" });
 
-            customMeetingDateInput.value = "";
-            customMeetingTimeInput.value = "";
+        //     customMeetingDateInput.value = "";
+        //     customMeetingTimeInput.value = "";
 
-            const meetingDeleteButtons = document.querySelectorAll('.meeting-delete-btn');
-            for (let i = 0; i < meetingDeleteButtons.length; i++) {
-                meetingDeleteButtons[i].addEventListener('click', function (event) {
-                    event.preventDefault();
-                    customMeetingDates.splice(i, 1);
+        //     const meetingDeleteButtons = document.querySelectorAll('.meeting-delete-btn');
+        //     for (let i = 0; i < meetingDeleteButtons.length; i++) {
+        //         meetingDeleteButtons[i].addEventListener('click', function (event) {
+        //             event.preventDefault();
+        //             customMeetingDates.splice(i, 1);
 
-                    // Update the hidden input field value
-                    document.getElementById('custom-hidden-meeting-date-time').value = JSON.stringify(customMeetingDates);
+        //             // Update the hidden input field value
+        //             document.getElementById('custom-hidden-meeting-date-time').value = JSON.stringify(customMeetingDates);
 
-                    let output = '';
-                    for (let j = 0; j < customMeetingDates.length; j++) {
-                        output += `${j + 1}. Meeting date: ${customMeetingDates[j][0]} || Meeting Time: ${customMeetingDates[j][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
-                    }
-                    customMeetingDatesList.innerHTML = output;
+        //             let output = '';
+        //             for (let j = 0; j < customMeetingDates.length; j++) {
+        //                 output += `${j + 1}. Meeting date: ${customMeetingDates[j][0]} || Meeting Time: ${customMeetingDates[j][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+        //             }
+        //             customMeetingDatesList.innerHTML = output;
 
-                    // enable/disable the submit button
-                    checkFormValidity();
+        //             // enable/disable the submit button
+        //             checkFormValidity();
 
-                    // add event listener again after deleting an item
-                    addMeetingDeleteListeners();
-                });
-            }
-        });
+        //             // add event listener again after deleting an item
+        //             addMeetingDeleteListeners();
+        //         });
+        //     }
+        // });
 
-        function addMeetingDeleteListeners() {
-            const meetingDeleteButtons = document.querySelectorAll('.meeting-delete-btn');
-            for (let i = 0; i < meetingDeleteButtons.length; i++) {
-                meetingDeleteButtons[i].addEventListener('click', function (event) {
-                    event.preventDefault();
-                    customMeetingDates.splice(i, 1);
+        // function addMeetingDeleteListeners() {
+        //     const meetingDeleteButtons = document.querySelectorAll('.meeting-delete-btn');
+        //     for (let i = 0; i < meetingDeleteButtons.length; i++) {
+        //         meetingDeleteButtons[i].addEventListener('click', function (event) {
+        //             event.preventDefault();
+        //             customMeetingDates.splice(i, 1);
 
-                    // Update the hidden input field value
-                    document.getElementById('custom-hidden-meeting-date-time').value = JSON.stringify(customMeetingDates);
+        //             // Update the hidden input field value
+        //             document.getElementById('custom-hidden-meeting-date-time').value = JSON.stringify(customMeetingDates);
 
-                    let output = '';
-                    for (let j = 0; j < customMeetingDates.length; j++) {
-                        output += `${j + 1}. Meeting date: ${customMeetingDates[j][0]} || Meeting Time: ${customMeetingDates[j][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
-                    }
-                    customMeetingDatesList.innerHTML = output;
+        //             let output = '';
+        //             for (let j = 0; j < customMeetingDates.length; j++) {
+        //                 output += `${j + 1}. Meeting date: ${customMeetingDates[j][0]} || Meeting Time: ${customMeetingDates[j][1]} <button class="btn meeting-delete-btn"><i class="fas fa-trash"></i></button><br/>`;
+        //             }
+        //             customMeetingDatesList.innerHTML = output;
 
-                    // enable/disable the submit button
-                    checkFormValidity();
+        //             // enable/disable the submit button
+        //             checkFormValidity();
 
-                    // add event listener again after deleting an item
-                    addMeetingDeleteListeners();
-                });
-            }
-        }
+        //             // add event listener again after deleting an item
+        //             addMeetingDeleteListeners();
+        //         });
+        //     }
+        // }
 
-        addMeetingDeleteListeners();
+        // addMeetingDeleteListeners();
 
 
         // --------------------------------------------------------------------------------------------------
@@ -851,6 +859,8 @@
                         meetingChecked = true;
                     }
                 });
+            } else {
+                meetingChecked = true
             }
 
             const mailDayBeforeCheckbox = document.getElementById('day-before')
@@ -860,16 +870,8 @@
 
             const beforeSameAfterTimeInput = document.getElementById('before-same-after-time');
             // Check if the custom date radio button is selected and there are no dates
-            const noCustomMailNeededDates = customMeetingDates.length !== 0;
+            // const noCustomMailNeededDates = customMeetingDates.length !== 0;
 
-            let meetingInputDateTime = false
-            if (mailDayCustomCheckbox.checked) {
-                if (noCustomMailNeededDates) {
-                    meetingInputDateTime = true
-                }
-            } else {
-                meetingInputDateTime = true
-            }
             
             let meetingInputTime = false
             if (mailDayBeforeCheckbox.checked || mailDaySameCheckbox.checked || mailDayAfterCheckbox.checked) {
@@ -878,6 +880,18 @@
                 }
             } else {
                 meetingInputTime = true
+            }
+
+            const customMeetingHowManyDays = document.getElementById('custom-meeting-how-many-days')
+            const customMeetingTime = document.getElementById('custom-meeting-time')
+
+            let meetingCustomInputs = false
+            if (mailDayCustomCheckbox.checked) {
+                if (customMeetingHowManyDays.value !== '' && customMeetingTime.value !== '') {
+                    meetingCustomInputs = true
+                }
+            } else {
+                meetingCustomInputs = true
             }
 
             // logs
@@ -894,19 +908,30 @@
             // }
 
             if (customRadio.checked && noDates) {
+                console.log("1");
                 submitButton.disabled = true;
             } else if (dailyRadio.checked && (dailyStartDate.value === '' || dailyEndDate.value === '' || (dailyStartDate.value > dailyEndDate.value))) {
+                console.log("2");
                 submitButton.disabled = true;
             } else if (weeklyRadio.checked && (!weeklyChecked || weeklyStartDate.value === '' || weeklyEndDate.value === '')) {
+                console.log("3");
                 submitButton.disabled = true;
             } else if (monthlyRadio.checked && (!monthlyChecked || monthlyStartDate.value === '' || monthlyEndDate.value === '')) {
+                console.log("4");
                 submitButton.disabled = true;
-            } else if (meetingNeeded.checked && !meetingChecked) {
+            } else if (!meetingChecked) {
+                console.log("5");
                 submitButton.disabled = true;
-            } else if (meetingNeeded.checked && meetingChecked && !(meetingInputDateTime && meetingInputTime)) {
+            } else if (!meetingInputTime) {
+                console.log("6");
+                submitButton.disabled = true;
+            } else if (!meetingCustomInputs) {
+                console.log("7");
                 submitButton.disabled = true;
             } else {
                 // Enable/disable the submit button based on validity
+                console.log("8");
+                console.log(!valid);
                 submitButton.disabled = !valid;
             }
         }

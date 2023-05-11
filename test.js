@@ -489,5 +489,76 @@
 // addMeetingDeleteListeners();
 
 
+// let array1 = [['apple', 'banana'], ['cherry', 'date'], ['god', 'human']];
+// let array2 = ['eggplant', 'fig'];
 
-<input class="btn btn-success w-100" type="submit" value="Proceed"></input>
+// // Combine the arrays
+// let combinedArray = [array1[0].concat(array2), array1[1]];
+
+// // Remove the last three elements from the first array
+// // combinedArray[0].splice(-3);
+
+// console.log(combinedArray);
+
+// const date = "2023-05-27";
+// const time = "21:00";
+// const dateTime = new Date(date + 'T' + time);
+// console.log(dateTime);
+
+// dateTime.setDate(dateTime.getDate() - 1);
+// const meetingDateTime = dateTime.toISOString();
+
+// console.log(meetingDateTime);
+
+// const startDateStr = '2023-05-12';
+// const endDateStr = '2023-06-26';
+
+// const startDate = new Date(startDateStr);
+// const endDate = new Date(endDateStr);
+
+// for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+//   console.log(d.toISOString().slice(0, 10));
+// }
+
+// const startDateStr = "2023-05-12";
+// const endDateStr = "2023-05-26";
+// const dayList = ["monday","tuesday","wednesday","thursday","friday"];
+
+// const startDate = new Date(startDateStr);
+// const endDate = new Date(endDateStr);
+
+// const result = [];
+
+// for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+//   console.log(date.getDay());  
+//   const dayOfWeek = dayList[date.getDay()];
+//   if (dayList.includes(dayOfWeek)) {
+//     const dateStr = date.toISOString().substring(0, 10);
+//     result.push(dateStr);
+//   }
+// }
+
+// console.log(result);
+
+// const dateStr = '2023-05-28';
+// const dateObj = new Date(dateStr + 'T' + '12:00');
+
+// console.log(dateObj);
+
+// const options = { weekday: 'long' };
+// let dayName = dateObj.toLocaleDateString('en-US', options);
+// dayName = dayName.toLowerCase()
+
+// console.log(dayName); // Output: "Sunday"
+
+const moment = require('moment-timezone');
+
+const date = "2023-05-27";
+const time = "21:00";
+
+const options = { weekday: 'long' };
+// let dayName = assigned_date.toLocaleDateString('en-US', options);
+
+const dateTime = moment.tz(`${date} ${time}`, 'YYYY-MM-DD HH:mm', 'Asia/Kolkata');
+
+console.log(dateTime.toLocaleDateString('en-US', options)); // output: 2023-05-27T21:00:00+05:30

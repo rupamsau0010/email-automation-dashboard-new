@@ -1,53 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-
-    <title>OTP - Enter the OTP sent on your Email</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="static/favicon-32x32.png">
-
-    <!-- Bootstrap v5.1.3 CDNs -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- CSS File -->
-    <link rel="stylesheet" href="css/dashboard.css">
-
+    <title>Example</title>
 </head>
 
 <body>
-
-    <div class="login">
-
-        <h1 class="text-center"><img src="static/cognizant-logo-with-name.jpg" height="80" width="300" alt=""></h1>
-        
-        <form class="needs-validation" action="/check-otp" method="post">
-            <div class="form-group">
-                <label class="form-label" for="otp">Enter the OTP</label>
-                <input class="form-control" type="text" id="otp" name="otp" required oninput="validateText()">
-                <div id="textError" class="invalid-feedback">Please enter the six digit OTP sent on your Email</div>
-            </div>
-            <input class="btn btn-success w-100" type="submit" value="Login">
-        </form>
-    </div>
+    <h1>Example</h1>
+    
+    <h1><% JSON.perse(myArray) %></h1>
     <script>
-        function validateText() {
-            const textInput = document.getElementById("otp");
-            const textPattern = /^[a-zA-Z]+$/;
-
-            if (!textPattern.test(textInput.value.trim())) {
-                textInput.classList.add("is-invalid");
-                document.getElementById("textError").style.display = "block";
-            } else {
-                textInput.classList.remove("is-invalid");
-                document.getElementById("textError").style.display = "none";
-            }
-        }
-        
+        let sampleJsonData = ['apple', 'banana', 'orange']
+        var myArray = '<%- JSON.stringify(sampleJsonData) %>'
     </script>
-
 </body>
 
 </html>
-

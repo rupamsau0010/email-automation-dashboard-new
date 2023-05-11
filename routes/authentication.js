@@ -98,15 +98,15 @@ router.post('/send-otp', async (req, res) => {
         // res.render("otp")
     } catch (err) {
         console.error(err);
-        // res.send(`
-        //     <script>
-        //     alert(${err});
-        //     setTimeout(function() {
-        //         window.location.href = '/';
-        //     }, 1); // redirect after 1 milisecond
-        //     </script>
-        // `);
-        res.send({"userId": process.env.mssql_username, "password": process.env.mssql_password})
+        res.send(`
+            <script>
+            alert(${err});
+            setTimeout(function() {
+                window.location.href = '/';
+            }, 1); // redirect after 1 milisecond
+            </script>
+        `);
+        // res.send({"userId": process.env.mssql_username, "password": process.env.mssql_password})
     }
 });
 
