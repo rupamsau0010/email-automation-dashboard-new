@@ -154,6 +154,7 @@ router.post("/create-new-task-data", async (req, res) => {
                 // create a datetime obj from the last_date and the meeting time
 
                 const dateParts = last_date.split("/");
+                console.log(dateParts);
                 if (dateParts[0].length < 2) {
                     dateParts[0] = '0' + dateParts[0]
                 }
@@ -204,8 +205,8 @@ router.post("/create-new-task-data", async (req, res) => {
                 let assigned_date = custom_hidden_start_end_date[i][0]
                 let last_date = custom_hidden_start_end_date[i][1]
 
-                assigned_date_arr.push(assigned_date)
-                last_date_arr.push(last_date)
+                assigned_date_arr.push(new Date(assigned_date).toLocaleDateString())
+                last_date_arr.push(new Date(last_date).toLocaleDateString())
             }
 
             // console.log(assigned_date_arr);
@@ -291,8 +292,16 @@ router.post("/create-new-task-data", async (req, res) => {
             const monthlyStartDate = req.body['monthly-start-date']
             const monthlyEndDate = req.body['monthly-end-date']
             const monthlyCompletionDayAfter = req.body['monthly-completion-day-after']
-            const monthlyRecurrence = req.body['monthly-recurrence']
+            let monthlyRecurrence = req.body['monthly-recurrence']
             const monthlyCompletionDayAfterInt = parseInt(monthlyCompletionDayAfter)
+
+            // logs
+            // console.log(monthlyRecurrence);
+            if (typeof(monthlyRecurrence) === 'string') {
+                monthlyRecurrence = [monthlyRecurrence]
+            }
+
+            // console.log(monthlyRecurrence);
 
             const startDate = new Date(monthlyStartDate);
             const endDate = new Date(monthlyEndDate);
@@ -330,6 +339,7 @@ router.post("/create-new-task-data", async (req, res) => {
 
         // write the entries into the database
         let total_tasks = last_date_arr.length
+        // console.log("last date arr -> " + last_date_arr.length);
         for (let i = 0; i < total_tasks; i++) {
             // if meeting needed
             // call meeting_needed_calculation function
@@ -392,6 +402,7 @@ router.post("/create-new-task-data", async (req, res) => {
                 insert_request.input('meeting_needed', meeting_needed);
                 insert_request.input('meeting_date_times', meeting_dates_times_str);
                 await insert_request.query(insert_data_query);
+                // console.log("inserted successfully");
 
             } else {
                 // insert into the database
@@ -412,6 +423,7 @@ router.post("/create-new-task-data", async (req, res) => {
                 insert_request.input('last_date', last_date_arr[i]);
                 insert_request.input('meeting_needed', meeting_needed);
                 await insert_request.query(insert_data_query);
+                // console.log("inserted successfully");
             }
         }
         res.send(`

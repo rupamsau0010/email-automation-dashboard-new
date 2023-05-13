@@ -551,14 +551,24 @@
 
 // console.log(dayName); // Output: "Sunday"
 
-const moment = require('moment-timezone');
+// const moment = require('moment-timezone');
 
-const date = "2023-05-27";
-const time = "21:00";
+// const date = "2023-05-27";
+// const time = "21:00";
 
-const options = { weekday: 'long' };
-// let dayName = assigned_date.toLocaleDateString('en-US', options);
+// const options = { weekday: 'long' };
+// // let dayName = assigned_date.toLocaleDateString('en-US', options);
 
-const dateTime = moment.tz(`${date} ${time}`, 'YYYY-MM-DD HH:mm', 'Asia/Kolkata');
+// const dateTime = moment.tz(`${date} ${time}`, 'YYYY-MM-DD HH:mm', 'Asia/Kolkata');
 
-console.log(dateTime.toLocaleDateString('en-US', options)); // output: 2023-05-27T21:00:00+05:30
+// console.log(dateTime.toLocaleDateString('en-US', options)); // output: 2023-05-27T21:00:00+05:30
+
+// let date = '2023-05-26'
+// console.log(new Date(date).toLocaleDateString());
+
+let arr = []
+
+let value = "apple"
+
+arr = value
+console.log(arr);
