@@ -116,12 +116,12 @@ router.post("/get-my-tasks", async (req, res) => {
 
     if (importance === "0") {
         if (job_status === "all") {
-            var my_task_data_query = "select * from [dbo].[task_details] where employee_id = @email_id order by last_date asc"
+            var my_task_data_query = "select * from [dbo].[task_details] where employee_id = @email_id and assigned_date <= GETDATE() order by last_date asc"
             var data_request = poolConnection.request();
             data_request.input('email_id', email_id);
             result = await data_request.query(my_task_data_query);
         } else {
-            var my_task_data_query = "select * from [dbo].[task_details] where employee_id = @email_id and completed = @completed order by last_date asc"
+            var my_task_data_query = "select * from [dbo].[task_details] where employee_id = @email_id and completed = @completed and assigned_date <= GETDATE() order by last_date asc"
             var data_request = poolConnection.request();
             data_request.input('email_id', email_id);
             data_request.input('completed', completed);
@@ -129,13 +129,13 @@ router.post("/get-my-tasks", async (req, res) => {
         }
     } else {
         if (job_status === "all") {
-            var my_task_data_query = "select * from [dbo].[task_details] where severity = @severity and employee_id = @email_id order by last_date asc"
+            var my_task_data_query = "select * from [dbo].[task_details] where severity = @severity and employee_id = @email_id and assigned_date <= GETDATE() order by last_date asc"
             var data_request = poolConnection.request();
             data_request.input('severity', parseInt(importance));
             data_request.input('email_id', email_id);
             result = await data_request.query(my_task_data_query);
         } else {
-            var my_task_data_query = "select * from [dbo].[task_details] where severity = @severity and employee_id = @email_id and completed = @completed order by last_date asc"
+            var my_task_data_query = "select * from [dbo].[task_details] where severity = @severity and employee_id = @email_id and completed = @completed and assigned_date <= GETDATE() order by last_date asc"
             var data_request = poolConnection.request();
             data_request.input('severity', parseInt(importance));
             data_request.input('email_id', email_id);
@@ -242,12 +242,12 @@ router.post("/get-given-tasks", async (req, res) => {
 
     if (importance === "0") {
         if (job_status === "all") {
-            var my_task_data_query = "select * from [dbo].[task_details] where sender_id = @email_id order by last_date asc"
+            var my_task_data_query = "select * from [dbo].[task_details] where sender_id = @email_id and assigned_date <= GETDATE() order by last_date asc"
             var data_request = poolConnection.request();
             data_request.input('email_id', email_id);
             result = await data_request.query(my_task_data_query);
         } else {
-            var my_task_data_query = "select * from [dbo].[task_details] where sender_id = @email_id and completed = @completed order by last_date asc"
+            var my_task_data_query = "select * from [dbo].[task_details] where sender_id = @email_id and completed = @completed and assigned_date <= GETDATE() order by last_date asc"
             var data_request = poolConnection.request();
             data_request.input('email_id', email_id);
             data_request.input('completed', completed);
@@ -255,13 +255,13 @@ router.post("/get-given-tasks", async (req, res) => {
         }
     } else {
         if (job_status === "all") {
-            var my_task_data_query = "select * from [dbo].[task_details] where severity = @severity and sender_id = @email_id order by last_date asc"
+            var my_task_data_query = "select * from [dbo].[task_details] where severity = @severity and sender_id = @email_id and assigned_date <= GETDATE() order by last_date asc"
             var data_request = poolConnection.request();
             data_request.input('severity', parseInt(importance));
             data_request.input('email_id', email_id);
             result = await data_request.query(my_task_data_query);
         } else {
-            var my_task_data_query = "select * from [dbo].[task_details] where severity = @severity and sender_id = @email_id and completed = @completed order by last_date asc"
+            var my_task_data_query = "select * from [dbo].[task_details] where severity = @severity and sender_id = @email_id and completed = @completed and assigned_date <= GETDATE() order by last_date asc"
             var data_request = poolConnection.request();
             data_request.input('severity', parseInt(importance));
             data_request.input('email_id', email_id);
