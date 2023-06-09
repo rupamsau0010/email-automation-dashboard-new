@@ -19,7 +19,7 @@
 <body>
     <div class="data-outer">
         <h1 class="text-center"><img src="static/cognizant-logo-with-name.jpg" height="80" width="300" alt=""></h1>
-        <% if(data.length > 0 && data[0].view === "self") { %>
+        <% if(data.length> 0 && data[0].view === "self") { %>
             <form class="data-form" action="/update-task-completion-status" method="post">
                 <div class="table-container">
                     <table class="table table-striped">
@@ -30,6 +30,7 @@
                                 <th>Details</th>
                                 <th>Assigned Date</th>
                                 <th>Last Date</th>
+                                <th>Comments</th>
                                 <th>Mark as Completed</th>
                             </tr>
                         </thead>
@@ -52,17 +53,21 @@
                                         <%=element.last_date %>
                                     </td>
                                     <td>
-                                        <% if (element.completed === true) { %>
+                                        <input id="inner-form-self" class="btn btn-primary inner-form-self-class"
+                                            type="submit" name="<%= element.task_id %>" value="view">
+                                    </td>
+                                    <td>
+                                        <% if (element.completed===true) { %>
                                             <label class="switch">
                                                 <input type="checkbox" name="<%= element.task_id %>" value="on" checked>
                                                 <span class="slider"></span>
                                             </label>
-                                        <% } else { %>
-                                            <label class="switch">
-                                                <input type="checkbox" name="<%= element.task_id %>" value="on">
-                                                <span class="slider"></span>
-                                            </label>
-                                        <% } %>
+                                            <% } else { %>
+                                                <label class="switch">
+                                                    <input type="checkbox" name="<%= element.task_id %>" value="on">
+                                                    <span class="slider"></span>
+                                                </label>
+                                                <% } %>
                                     </td>
                                 </tr>
                                 <% }); %>
@@ -71,69 +76,147 @@
                 </div>
                 <button type="submit" class="btn btn-success data-button">Update Data</button>
             </form>
-        <% } else if (data.length > 0 && data[0].view === "given") { %>
-            <form class="data-form" action="/update-task-completion-status" method="post">
-                <div class="table-container">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Employee Id</th>
-                                <th>Task Id</th>
-                                <th>Task Name</th>
-                                <th>Details</th>
-                                <th>Assigned Date</th>
-                                <th>Last Date</th>
-                                <th>Mark as Completed</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% data.forEach(function(element){ %>
+            <% } else if (data.length> 0 && data[0].view === "given") { %>
+                <form class="data-form" action="/update-task-completion-status" method="post">
+                    <div class="table-container">
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        <%=element.employee_id %>
-                                    </td>
-                                    <td>
-                                        <%=element.task_id %>
-                                    </td>
-                                    <td>
-                                        <%=element.task_name %>
-                                    </td>
-                                    <td>
-                                        <%-element.task_details %>
-                                    </td>
-                                    <td>
-                                        <%=element.assigned_date %>
-                                    </td>
-                                    <td>
-                                        <%=element.last_date %>
-                                    </td>
-                                    <td>
-                                        <% if (element.completed === true) { %>
-                                            <label class="switch">
-                                                <input type="checkbox" name="<%= element.task_id %>" value="on" checked>
-                                                <span class="slider"></span>
-                                            </label>
-                                        <% } else { %>
-                                            <label class="switch">
-                                                <input type="checkbox" name="<%= element.task_id %>" value="on">
-                                                <span class="slider"></span>
-                                            </label>
-                                        <% } %>
-                                    </td>
+                                    <th>Employee Id</th>
+                                    <th>Task Id</th>
+                                    <th>Task Name</th>
+                                    <th>Details</th>
+                                    <th>Assigned Date</th>
+                                    <th>Last Date</th>
+                                    <th>Comments</th>
+                                    <th>Mark as Completed</th>
                                 </tr>
-                                <% }); %>
-                        </tbody>
-                    </table>
-                </div>
-                <button type="submit" class="btn btn-success data-button">Update Data</button>
-            </form>
-        <% } else { %>
-            <div class="no-data-h2">
-                <h2>You don't have any task based on the condition you entered or you are not authorized to update this task. Please go back and
-                    check the condition. Thank you.</h2>
-            </div>
-        <% } %>
+                            </thead>
+                            <tbody>
+                                <% data.forEach(function(element){ %>
+                                    <tr>
+                                        <td>
+                                            <%=element.employee_id %>
+                                        </td>
+                                        <td>
+                                            <%=element.task_id %>
+                                        </td>
+                                        <td>
+                                            <%=element.task_name %>
+                                        </td>
+                                        <td>
+                                            <%-element.task_details %>
+                                        </td>
+                                        <td>
+                                            <%=element.assigned_date %>
+                                        </td>
+                                        <td>
+                                            <%=element.last_date %>
+                                        </td>
+                                        <td>
+                                            <input id="inner-form-given" class="btn btn-primary" type="submit"
+                                                name="<%= element.task_id %>" value="view">
+                                        </td>
+                                        <td>
+                                            <% if (element.completed===true) { %>
+                                                <label class="switch">
+                                                    <input type="checkbox" name="<%= element.task_id %>" value="on"
+                                                        checked>
+                                                    <span class="slider"></span>
+                                                </label>
+                                                <% } else { %>
+                                                    <label class="switch">
+                                                        <input type="checkbox" name="<%= element.task_id %>" value="on">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <% } %>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="submit" class="btn btn-success data-button">Update Data</button>
+                </form>
+                <% } else { %>
+                    <div class="no-data-h2">
+                        <h2>You don't have any task based on the condition you entered or you are not authorized to
+                            update this task. Please go back and
+                            check the condition. Thank you.</h2>
+                    </div>
+                    <% } %>
     </div>
+    <script>
+        var inputs = document.querySelectorAll('.inner-form-self-class');
+
+        // Attach event listener to each input element
+        inputs.forEach(function (input) {
+            input.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var inputName = input.getAttribute('name');
+                console.log('Input name:', inputName);
+
+                // Rest of the code...
+                var url = '/load-live-comments'
+
+                // Create a FormData object and append the input data
+                var formData = new FormData();
+                formData.append('inputName', inputName);
+
+                // Make the POST API call for the inner form
+                fetch('/load-live-comments', {
+                    method: 'POST',
+                    body: new URLSearchParams(formData),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded' // Set the content type
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Handle successful response
+                        console.log('Inner form API call succeeded');
+                        window.location.href = '/view-live-comments'
+                    } else {
+                        // Handle error response
+                        console.error('Inner form API call failed');
+                    }
+                })
+                .catch(error => {
+                    // Handle network or other errors
+                    console.error('Inner form API call failed', error);
+                });
+            });
+        });
+
+        // document.getElementById('inner-form-self').addEventListener('click', function (event) {
+        //     event.preventDefault(); // Prevent the default form submission
+
+        //     var input = document.getElementById('inner-form-self');
+        //     var inputName = input.getAttribute('name');
+        //     console.log('Input name:', inputName);
+
+        //     var url = '/see-comments/inner'; // Specify the desired endpoint for the inner form
+
+        //     // Make the POST API call for the inner form
+        //     fetch(url, {
+        //         method: 'POST'
+        //     })
+        //         .then(response => {
+        //             if (response.ok) {
+        //                 // Handle successful response
+        //                 console.log('Inner form API call succeeded');
+        //             } else {
+        //                 // Handle error response
+        //                 console.error('Inner form API call failed');
+        //             }
+        //         })
+        //         .catch(error => {
+        //             // Handle network or other errors
+        //             console.error('Inner form API call failed', error);
+        //         });
+        // });
+    </script>
 </body>
 
 </html>

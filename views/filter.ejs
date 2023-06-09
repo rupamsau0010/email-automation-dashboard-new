@@ -41,15 +41,38 @@
                                 aria-labelledby="login-tab">
                                 <form action="/get-my-tasks" method="post">
                                     <h4>Importance of the task</h4>
-                                    <select class="form-select" aria-label="Default select example" name="importance">
+                                    <!-- <select class="form-select" aria-label="Default select example" name="importance">
                                         <option value="1">High</option>
                                         <option value="2">Moderate</option>
                                         <option value="3">Low</option>
                                         <option value="0">Select all</option>
-                                    </select>
+                                    </select> -->
+                                    <div class="filter-tasks">
+                                        <div class="high">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-importance"
+                                                    id="high" value="1">
+                                                <label class="form-check-label" for="high">High</label>
+                                            </div>
+                                        </div>
+                                        <div class="moderate">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-importance"
+                                                    id="moderate" value="2">
+                                                <label class="form-check-label" for="moderate">Moderate</label>
+                                            </div>
+                                        </div>
+                                        <div class="low">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-importance"
+                                                    id="low" value="3">
+                                                <label class="form-check-label" for="low">Low</label>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <h4 class="task-comletion-status">Task Completion Status</h4>
-                                    <div class="form-check">
+                                    <!-- <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
                                             id="flexRadioDefault1" value="non-completed" checked>
                                         <label class="form-check-label" for="flexRadioDefault1">
@@ -69,6 +92,47 @@
                                         <label class="form-check-label" for="flexRadioDefault3">
                                             Select all
                                         </label>
+                                    </div> -->
+                                    <div class="filter-tasks">
+                                        <div class="task-not-completed">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-completion-status"
+                                                    id="non-completed" value="non-completed">
+                                                <label class="form-check-label" for="non-completed">Not completed</label>
+                                            </div>
+                                        </div>
+                                        <div class="task-completed">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-completion-status"
+                                                    id="completed" value="completed">
+                                                <label class="form-check-label" for="completed">Completed</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="task-completed-by">Task Completed By</h4>
+                                    <div class="filter-tasks">
+                                        <div class="task-completed-by-today">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-completed-by-days"
+                                                    id="today" value="1">
+                                                <label class="form-check-label" for="today">Today</label>
+                                            </div>
+                                        </div>
+                                        <div class="task-completed-by-2-days">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-completed-by-days"
+                                                    id="2days" value="2">
+                                                <label class="form-check-label" for="2days">Upcoming two days</label>
+                                            </div>
+                                        </div>
+                                        <div class="task-completed-by-7-days">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-completed-by-days"
+                                                    id="7days" value="7">
+                                                <label class="form-check-label" for="7days">Upcoming week</label>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <input class="btn btn-success w-100 btn-main-page" type="submit" value="Get Info">
@@ -77,15 +141,38 @@
                             <div class="tab-pane fade create-new-task-h2" id="signup-form" role="tabpanel" aria-labelledby="signup-tab">
                                 <form action="/get-given-tasks" method="post">
                                     <h4>Importance of the task</h4>
-                                    <select class="form-select" aria-label="Default select example" name="importance">
+                                    <!-- <select class="form-select" aria-label="Default select example" name="importance">
                                         <option value="1">High</option>
                                         <option value="2">Moderate</option>
                                         <option value="3">Low</option>
                                         <option value="0">Select all</option>
-                                    </select>
+                                    </select> -->
+                                    <div class="filter-tasks">
+                                        <div class="high">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-importance"
+                                                    id="high" value="1">
+                                                <label class="form-check-label" for="high">High</label>
+                                            </div>
+                                        </div>
+                                        <div class="moderate">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-importance"
+                                                    id="moderate" value="2">
+                                                <label class="form-check-label" for="moderate">Moderate</label>
+                                            </div>
+                                        </div>
+                                        <div class="low">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-importance"
+                                                    id="low" value="3">
+                                                <label class="form-check-label" for="low">Low</label>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <h4 class="task-comletion-status">Task Completion Status</h4>
-                                    <div class="form-check">
+                                    <!-- <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
                                             id="flexRadioDefault1" value="non-completed" checked>
                                         <label class="form-check-label" for="flexRadioDefault1">
@@ -103,8 +190,49 @@
                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
                                             id="flexRadioDefault3" value="all">
                                         <label class="form-check-label" for="flexRadioDefault3">
-                                            select all
+                                            Select all
                                         </label>
+                                    </div> -->
+                                    <div class="filter-tasks">
+                                        <div class="task-not-completed">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-completion-status"
+                                                    id="non-completed" value="non-completed">
+                                                <label class="form-check-label" for="non-completed">Not completed</label>
+                                            </div>
+                                        </div>
+                                        <div class="task-completed">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-completion-status"
+                                                    id="completed" value="completed">
+                                                <label class="form-check-label" for="completed">Completed</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="task-completed-by">Task Completed By</h4>
+                                    <div class="filter-tasks">
+                                        <div class="task-completed-by-today">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-completed-by-days"
+                                                    id="today" value="1">
+                                                <label class="form-check-label" for="today">Today</label>
+                                            </div>
+                                        </div>
+                                        <div class="task-completed-by-2-days">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-completed-by-days"
+                                                    id="2days" value="2">
+                                                <label class="form-check-label" for="2days">Upcoming two days</label>
+                                            </div>
+                                        </div>
+                                        <div class="task-completed-by-7-days">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="task-completed-by-days"
+                                                    id="7days" value="7">
+                                                <label class="form-check-label" for="7days">Upcoming week</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <input class="btn btn-success w-100 btn-main-page" type="submit" value="Get Info">
                                 </form>

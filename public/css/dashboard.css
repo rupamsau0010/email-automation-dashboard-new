@@ -46,7 +46,8 @@ body {
   margin-top: 15px;
 }
 
-.task-comletion-status {
+.task-comletion-status,
+.task-completed-by {
   margin-top: 20px;
 }
 
@@ -110,6 +111,35 @@ body {
   justify-content: center;
   text-align: center;
 }
+
+/* filter page */
+
+.filter-tasks {
+  display: flex;
+}
+
+.high,
+.moderate,
+.low {
+  width: 33.33%;
+  box-sizing: border-box;
+}
+
+.task-not-completed,
+.task-completed {
+  width: 50.0%;
+  box-sizing: border-box;
+}
+
+.task-completed-by-today,
+.task-completed-by-2-days,
+.task-completed-by-7-days {
+  width: 33.33%;
+  box-sizing: border-box;
+}
+
+
+/* filter page ends */
 
 /* create task page */
 .create-task {
@@ -428,4 +458,81 @@ body {
 
 .meeting-delete-btn .bi-trash {
   margin-right: 5px;
+}
+
+
+/* --------------------------------------------------- */
+/* communt box */
+
+.comments-container {
+  width: 1000px;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.comments-box {
+  width: 1450px;
+  height: 550px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: white;
+}
+
+.comment-left,
+.comment-right {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 5px;
+}
+
+.comment-right {
+  justify-content: flex-end;
+}
+
+.comment-left p,
+.comment-right p {
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 70%;
+}
+
+.comment-left {
+  margin-left: 10px;
+}
+
+.comment-right {
+  margin-right: 10px;
+}
+
+.comment-left p {
+  margin-right: auto;
+  background-color: #d5d5d5;
+}
+
+.comment-right p {
+  margin-left: auto;
+  background-color: #f2f2f2;
+}
+
+.comment-input-group-one {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.add-comment-input {
+  flex: 1;
+  margin-right: 5px;
+}
+
+.comment-input-group-two {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
 }

@@ -566,9 +566,36 @@
 // let date = '2023-05-26'
 // console.log(new Date(date).toLocaleDateString());
 
-let arr = []
+// let arr = []
 
-let value = "apple"
+// let value = "apple"
 
-arr = value
-console.log(arr);
+// arr = value
+// console.log(arr);
+
+// let arr = ['1', '3', '2', '4']
+// console.log(isNaN(arr));
+
+// var dist = {"me": "Hi Sham.. how are you"}
+
+// dist = JSON.stringify(dist)
+// console.log(dist);
+
+const date = new Date();
+
+// Options for formatting the date
+const options = {
+  timeZone: 'Asia/Kolkata',
+  hour12: false,
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  second: 'numeric'
+};
+
+// Format the date string
+const formattedDate = date.toLocaleString('en-IN', options);
+
+console.log(date);
