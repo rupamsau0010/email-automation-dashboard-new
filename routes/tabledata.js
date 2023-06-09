@@ -855,6 +855,16 @@ router.get("/view-live-comments", async (req, res) => {
         {"me": "Yeah.. probably the next week. Bye."},
         {"Sham": "Bye, have a nice day"},
         {"me": "Have a nice day Sham.. You too"},
+        {"me": "See you very soon."},
+        {"me": "Hi Sham.. how are you"},
+        {"me": "nice to meet you"},
+        {"Sham": "Hi Rupam.. Nice to meet you too. I'm fine. Hope you are enjoying your time in the office"},
+        {"me": "Yes. regarding that I need to update you something. I'll not be available from tomorrow due to some personal reasons"},
+        {"me": "I've already updated the team regarding this."},
+        {"Sham": "Okay Rupam. Thanks for letting me know. I hope to meet you soon."},
+        {"me": "Yeah.. probably the next week. Bye."},
+        {"Sham": "Bye, have a nice day"},
+        {"me": "Have a nice day Sham.. You too"},
         {"me": "See you very soon."}
     ]
 
