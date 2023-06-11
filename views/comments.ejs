@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Comments</title>
+    <title>Comments - <%= data.task_id %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="static/favicon-32x32.png">
 
@@ -17,26 +17,29 @@
 <body>
     <div class="data-outer">
         <h1 class="text-center"><img src="static/cognizant-logo-with-name.jpg" height="80" width="300" alt=""></h1>
-        <h5 class="text-center">Task ID - associate.director.one-manager.two-6/2/2023-1</h5>
+        <h5 class="text-center">Task ID - <%= data.task_id %></h5>
         <div class="comments-container">
-            <% data.forEach(function(comment) { %>
+            <% data.data.forEach(function(comment) { %>
+                <% var opponent = Object.keys(comment)[0]; %>
                 <div class="comment-<%= comment.me ? 'left' : 'right' %>">
                     <p>
-                        <%= comment.me ? comment.me : comment.Sham %>
+                        <%= comment.me ? comment.me : comment[opponent] %>
                     </p>
                 </div>
-                <% }) %>
+            <% }) %>
         </div>
-        <form class="submit-comment" id="comment-form" action="/create-new-task-data" method="post">
+        <form class="submit-comment" id="comment-form" action="/create-new-comment" method="post">
             <div class="comment-input-group-one">
                 <input class="form-control add-comment-input" type="text" id="comment-input" name="comment-input"
                   placeholder="Add comments" required>
                 <input class="btn btn-primary comment-submit-button" type="submit" value="Add">
             </div>
         </form>
-        <div class="comment-input-group-two">
-            <input class="btn btn-success comment-submit-button-refresh" type="submit" value="Refresh the page">
-        </div>
+        <form class="comment-refresh" id="refresh-comment-form" action="/view-live-comments" method="get">
+            <div class="comment-input-group-two">
+                <input class="btn btn-success comment-submit-button-refresh" type="submit" value="Refresh the page">
+            </div>
+        </form>
     </div>
     <script>
         // Scroll to the bottom of the comments box

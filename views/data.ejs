@@ -11,6 +11,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- script for chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- CSS File -->
     <link rel="stylesheet" href="css/dashboard.css">
 
@@ -19,7 +22,7 @@
 <body>
     <div class="data-outer">
         <h1 class="text-center"><img src="static/cognizant-logo-with-name.jpg" height="80" width="300" alt=""></h1>
-        <% if(data.length> 0 && data[0].view === "self") { %>
+        <% if(tableData.length> 0 && tableData[0].view === "self") { %>
             <form class="data-form" action="/update-task-completion-status" method="post">
                 <div class="table-container">
                     <table class="table table-striped">
@@ -35,7 +38,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% data.forEach(function(element){ %>
+                            <% tableData.forEach(function(element){ %>
                                 <tr>
                                     <td>
                                         <%=element.task_id %>
@@ -75,8 +78,9 @@
                     </table>
                 </div>
                 <button type="submit" class="btn btn-success data-button">Update Data</button>
+                <a href="/view-chart-insights" class="btn btn-success get-insights-button">Get Insights</a>
             </form>
-            <% } else if (data.length> 0 && data[0].view === "given") { %>
+            <% } else if (tableData.length> 0 && tableData[0].view === "given") { %>
                 <form class="data-form" action="/update-task-completion-status" method="post">
                     <div class="table-container">
                         <table class="table table-striped">
@@ -93,7 +97,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% data.forEach(function(element){ %>
+                                <% tableData.forEach(function(element){ %>
                                     <tr>
                                         <td>
                                             <%=element.employee_id %>
@@ -114,8 +118,8 @@
                                             <%=element.last_date %>
                                         </td>
                                         <td>
-                                            <input id="inner-form-given" class="btn btn-primary" type="submit"
-                                                name="<%= element.task_id %>" value="view">
+                                            <input id="inner-form-given" class="btn btn-primary inner-form-given-class"
+                                                type="submit" name="<%= element.task_id %>" value="view">
                                         </td>
                                         <td>
                                             <% if (element.completed===true) { %>
@@ -137,6 +141,7 @@
                         </table>
                     </div>
                     <button type="submit" class="btn btn-success data-button">Update Data</button>
+                    <a href="/view-chart-insights" class="btn btn-success get-insights-button">Get Insights</a>
                 </form>
                 <% } else { %>
                     <div class="no-data-h2">
@@ -146,11 +151,12 @@
                     </div>
                     <% } %>
     </div>
+
     <script>
-        var inputs = document.querySelectorAll('.inner-form-self-class');
+        var inputs_self = document.querySelectorAll('.inner-form-self-class');
 
         // Attach event listener to each input element
-        inputs.forEach(function (input) {
+        inputs_self.forEach(function (input) {
             input.addEventListener('click', function (event) {
                 event.preventDefault(); // Prevent the default form submission
 
@@ -172,50 +178,64 @@
                         'Content-Type': 'application/x-www-form-urlencoded' // Set the content type
                     }
                 })
-                .then(response => {
-                    if (response.ok) {
-                        // Handle successful response
-                        console.log('Inner form API call succeeded');
-                        window.location.href = '/view-live-comments'
-                    } else {
-                        // Handle error response
-                        console.error('Inner form API call failed');
-                    }
-                })
-                .catch(error => {
-                    // Handle network or other errors
-                    console.error('Inner form API call failed', error);
-                });
+                    .then(response => {
+                        if (response.ok) {
+                            // Handle successful response
+                            console.log('Inner form API call succeeded');
+                            window.location.href = '/view-live-comments'
+                        } else {
+                            // Handle error response
+                            console.error('Inner form API call failed');
+                        }
+                    })
+                    .catch(error => {
+                        // Handle network or other errors
+                        console.error('Inner form API call failed', error);
+                    });
             });
         });
 
-        // document.getElementById('inner-form-self').addEventListener('click', function (event) {
-        //     event.preventDefault(); // Prevent the default form submission
+        var inputs_given = document.querySelectorAll('.inner-form-given-class');
 
-        //     var input = document.getElementById('inner-form-self');
-        //     var inputName = input.getAttribute('name');
-        //     console.log('Input name:', inputName);
+        // Attach event listener to each input element
+        inputs_given.forEach(function (input) {
+            input.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default form submission
 
-        //     var url = '/see-comments/inner'; // Specify the desired endpoint for the inner form
+                var inputName = input.getAttribute('name');
+                console.log('Input name:', inputName);
 
-        //     // Make the POST API call for the inner form
-        //     fetch(url, {
-        //         method: 'POST'
-        //     })
-        //         .then(response => {
-        //             if (response.ok) {
-        //                 // Handle successful response
-        //                 console.log('Inner form API call succeeded');
-        //             } else {
-        //                 // Handle error response
-        //                 console.error('Inner form API call failed');
-        //             }
-        //         })
-        //         .catch(error => {
-        //             // Handle network or other errors
-        //             console.error('Inner form API call failed', error);
-        //         });
-        // });
+                // Rest of the code...
+                var url = '/load-live-comments'
+
+                // Create a FormData object and append the input data
+                var formData = new FormData();
+                formData.append('inputName', inputName);
+
+                // Make the POST API call for the inner form
+                fetch('/load-live-comments', {
+                    method: 'POST',
+                    body: new URLSearchParams(formData),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded' // Set the content type
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Handle successful response
+                            console.log('Inner form API call succeeded');
+                            window.location.href = '/view-live-comments'
+                        } else {
+                            // Handle error response
+                            console.error('Inner form API call failed');
+                        }
+                    })
+                    .catch(error => {
+                        // Handle network or other errors
+                        console.error('Inner form API call failed', error);
+                    });
+            });
+        });
     </script>
 </body>
 

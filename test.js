@@ -581,21 +581,26 @@
 // dist = JSON.stringify(dist)
 // console.log(dist);
 
-const date = new Date();
+// const date = new Date();
 
-// Options for formatting the date
-const options = {
-  timeZone: 'Asia/Kolkata',
-  hour12: false,
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-  second: 'numeric'
-};
+// // Options for formatting the date
+// const options = {
+//   timeZone: 'Asia/Kolkata',
+//   hour12: false,
+//   year: 'numeric',
+//   month: 'long',
+//   day: 'numeric',
+//   hour: 'numeric',
+//   minute: 'numeric',
+//   second: 'numeric'
+// };
 
-// Format the date string
-const formattedDate = date.toLocaleString('en-IN', options);
+// // Format the date string
+// const formattedDate = date.toLocaleString('en-IN', options);
 
-console.log(date);
+// console.log(date);
+
+var date = new Date();
+var formattedDate = date.toISOString();
+
+console.log(formattedDate);

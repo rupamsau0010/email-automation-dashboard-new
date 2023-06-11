@@ -110,7 +110,8 @@ router.get("/table-data", async (req, res) => {
     }
     // console.log(json_data);
 
-    res.render("data", { data: json_data })
+    // res.render("data", { data: json_data })
+    res.render("data", { tableData: json_data });
 })
 
 // get the table data based on condition
@@ -806,87 +807,180 @@ router.get("/view-live-comments", async (req, res) => {
     let view = req.cookies.view
     let email_id = req.cookies.email_id
 
-    console.log(task_id);
-    console.log(view);
-    console.log(email_id);
+    // console.log(task_id);
+    // console.log(view);
+    // console.log(email_id);
 
     var arr_data = []
     var poolConnection = await sql.connect(mssql_config);
     let sqlQuery = `select * from comments where task_id = '${task_id}' order by date_time`
 
-    // poolConnection.query(sqlQuery, async (err, result) => {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         console.log(result.recordset);
+    poolConnection.query(sqlQuery, async (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            // console.log(result.recordset);
 
-    //         if (view === "self" && email_id.split('@')[0] === task_id.split('-')[1]) {
-    //             console.log("in the if");
-    //             for(var i=0; i<result.recordset.length; i++) {
-    //                 var msg = JSON.parse(i.message_text)
-    //                 console.log("msg", msg);
-    //                 var keyName = Object.keys(msg)[0];
+            // get update version of email id
+            var email_id_only_letter = email_id.split('@')[0].replace(/[^A-Za-z]/g, "")
+            var opponent = ""
 
-    //                 // Create a new object with the updated key name
-    //                 var updatedMsg = { ...msg, me: msg.keyName };
+            if (view === "self" && email_id.split('@')[0] === task_id.split('-')[1]) {
+                console.log("in the if");
+                for (var i = 0; i < result.recordset.length; i++) {
+                    // console.log(result.recordset[i].message_text);
+                    var msg = JSON.parse(result.recordset[i].message_text)
+                    // console.log("msg", msg);
+                    var keyName = Object.keys(msg)[0];
 
-    //                 // Delete the old key from the object
-    //                 delete updatedMsg.keyName;
+                    // console.log("keyName " + keyName);
 
-    //                 arr_data.push(updatedMsg)
-    //                 console.log(arr_data);
-    //             }
-    //         } else if (view === "given" && email_id.split('@')[0] === task_id.split('-')[0]) {
+                    // console.log("email_id_only_letter " + email_id_only_letter);
+                    // Create a new object with the updated key name
+                    if (keyName === email_id_only_letter) {
+                        var updatedMsg = { ...msg, me: msg[keyName] };
 
-    //         } else {
+                        // Delete the old key from the object
+                        delete updatedMsg[keyName];
 
-    //         }
-    //     }
-    // });
+                        // console.log(updatedMsg);
+                        arr_data.push(updatedMsg)
+                    } else {
+                        arr_data.push(msg)
+                    }
+                }
+                opponent = task_id.split('-')[0].replace(/[^A-Za-z]/g, "")
+                // console.log(arr_data);
+            } else if (view === "given" && email_id.split('@')[0] === task_id.split('-')[0]) {
+                console.log("in the elif");
+                for (var i = 0; i < result.recordset.length; i++) {
+                    // console.log(result.recordset[i].message_text);
+                    var msg = JSON.parse(result.recordset[i].message_text)
+                    // console.log("msg", msg);
+                    var keyName = Object.keys(msg)[0];
+
+                    // console.log("keyName " + keyName);
+
+                    // console.log("email_id_only_letter " + email_id_only_letter);
+                    // Create a new object with the updated key name
+                    if (keyName === email_id_only_letter) {
+                        var updatedMsg = { ...msg, me: msg[keyName] };
+
+                        // Delete the old key from the object
+                        delete updatedMsg[keyName];
+
+                        // console.log(updatedMsg);
+                        arr_data.push(updatedMsg)
+                    } else {
+                        arr_data.push(msg)
+                    }
+                }
+                opponent = email_id.split('@')[1].replace(/[^A-Za-z]/g, "")
+            } else {
+
+            }
+            var data_dist = { data: arr_data, task_id: task_id, opponent: opponent }
+            // console.log(data_dist);
+            res.render("comments", { data: data_dist })
+        }
+    });
 
 
-    var arr_data = [
-        {"me": "Hi Sham.. how are you"},
-        {"me": "nice to meet you"},
-        {"Sham": "Hi Rupam.. Nice to meet you too. I'm fine. Hope you are enjoying your time in the office"},
-        {"me": "Yes. regarding that I need to update you something. I'll not be available from tomorrow due to some personal reasons"},
-        {"me": "I've already updated the team regarding this."},
-        {"Sham": "Okay Rupam. Thanks for letting me know. I hope to meet you soon."},
-        {"me": "Yeah.. probably the next week. Bye."},
-        {"Sham": "Bye, have a nice day"},
-        {"me": "Have a nice day Sham.. You too"},
-        {"me": "See you very soon."},
-        {"me": "Hi Sham.. how are you"},
-        {"me": "nice to meet you"},
-        {"Sham": "Hi Rupam.. Nice to meet you too. I'm fine. Hope you are enjoying your time in the office"},
-        {"me": "Yes. regarding that I need to update you something. I'll not be available from tomorrow due to some personal reasons"},
-        {"me": "I've already updated the team regarding this."},
-        {"Sham": "Okay Rupam. Thanks for letting me know. I hope to meet you soon."},
-        {"me": "Yeah.. probably the next week. Bye."},
-        {"Sham": "Bye, have a nice day"},
-        {"me": "Have a nice day Sham.. You too"},
-        {"me": "See you very soon."}
-    ]
+    // var arr_data = [
+    //     {"me": "Hi Sham.. how are you"},
+    //     {"me": "nice to meet you"},
+    //     {"Sham": "Hi Rupam.. Nice to meet you too. I'm fine. Hope you are enjoying your time in the office"},
+    //     {"me": "Yes. regarding that I need to update you something. I'll not be available from tomorrow due to some personal reasons"},
+    //     {"me": "I've already updated the team regarding this."},
+    //     {"Sham": "Okay Rupam. Thanks for letting me know. I hope to meet you soon."},
+    //     {"me": "Yeah.. probably the next week. Bye."},
+    //     {"Sham": "Bye, have a nice day"},
+    //     {"me": "Have a nice day Sham.. You too"},
+    //     {"me": "See you very soon."},
+    //     {"me": "Hi Sham.. how are you"},
+    //     {"me": "nice to meet you"},
+    //     {"Sham": "Hi Rupam.. Nice to meet you too. I'm fine. Hope you are enjoying your time in the office"},
+    //     {"me": "Yes. regarding that I need to update you something. I'll not be available from tomorrow due to some personal reasons"},
+    //     {"me": "I've already updated the team regarding this."},
+    //     {"Sham": "Okay Rupam. Thanks for letting me know. I hope to meet you soon."},
+    //     {"me": "Yeah.. probably the next week. Bye."},
+    //     {"Sham": "Bye, have a nice day"},
+    //     {"me": "Have a nice day Sham.. You too"},
+    //     {"me": "See you very soon."}
+    // ]
 
     // Render the comments.ejs page without any data
     // res.render("data", { data: json_data })
 
-    res.render("comments", { data: arr_data})
+    // res.render("comments", { data: arr_data})
 });
 
 // Update the task's completion states based on the information
 router.post("/load-live-comments", async (req, res) => {
     const task_id = req.body.inputName;
-    // console.log(task_id);
-
-    // store the task_id in cookie
-    res.cookie('task_id', JSON.stringify(task_id))
-
-    // Redirect to the /view-live-comments route to load the comments page
+    res.cookie('task_id', JSON.stringify(task_id));
     res.redirect("/view-live-comments");
-
-    // res.render("comments", { data: arr_data})
 });
+
+router.post("/create-new-comment", async (req, res) => {
+    const comment = req.body['comment-input']
+
+    // get cookies
+    let task_id = JSON.parse(req.cookies.task_id)
+    let view = req.cookies.view
+    let email_id = req.cookies.email_id
+
+    var email_id_only_letter = email_id.split('@')[0].replace(/[^A-Za-z]/g, "")
+
+    var comment_dist = { [email_id_only_letter]: comment }
+    var comment_dist_str = JSON.stringify(comment_dist)
+
+    var poolConnection = await sql.connect(mssql_config);
+
+    if ((view === "self" && email_id.split('@')[0] === task_id.split('-')[1]) || (view === "given" && email_id.split('@')[0] === task_id.split('-')[0])) {
+        var date = new Date();
+        var formattedDate = date.toISOString();
+        var sqlQuery = `INSERT INTO comments VALUES (@task_id, @comment_dist_str, @formattedDate)`;
+
+        // poolConnection.query(sqlQuery, async (err, result) => {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         res.redirect("/view-live-comments")
+        //     }
+        // });
+
+        var request = poolConnection.request();
+        request.input('task_id', sql.VarChar, task_id);
+        request.input('comment_dist_str', sql.VarChar, comment_dist_str);
+        request.input('formattedDate', sql.DateTime, formattedDate);
+
+        request.query(sqlQuery, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.redirect("/view-live-comments")
+            }
+        });
+
+    } else {
+        res.redirect("/view-live-comments")
+    }
+})
+
+// create a chart
+router.get('/view-chart-insights', (req, res) => {
+    const chartData  = {
+        label_pie : ['Completed Tasks', 'Pending Tasks'],
+        label_bar : ['Previous Month', 'Current Month'],
+        completedTasks: 15,
+        pendingTasks: 5,
+        taskCompletedOnTime: [10, 5],
+        totalGivenTask: [15, 20]
+    };
+    res.render('trychart', { chartData : JSON.stringify(chartData ) });
+});
+
 
 
 module.exports = router
